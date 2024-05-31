@@ -1,14 +1,26 @@
 import { useEffect } from "react";
-import Shepherd from "shepherd.js";
-import "shepherd.js/dist/css/shepherd.css";
-import CustomStep from "./CustomStep";
-import StickMan from "../../assets/images/stickman.svg";
 import ReactDOM from "react-dom";
-import "./customCSS.css";
+
+import Shepherd from "shepherd.js";
+
+import TypingText from "./TypingText";
+
+import StickMan from "../../assets/images/stickman.svg";
+
+import "../../assets/css/customCSS.css";
 
 interface Props {
   setTourStatus: (value: boolean) => void;
 }
+
+const game_intro = [
+  "Welcome to the Ultimate Tic Tac Toe!",
+  "Say goodbye to paper—play digitally!",
+  "Simple to learn, a challenge to master. Are you ready?",
+  "Think ahead. Plan your moves. Outsmart your opponent.",
+  "Win or lose, every game is a chance to grow stronger. Ready for another?",
+  "Enjoy the game! Make every move count!",
+];
 
 const setupTour = (setTourStatus: (value: boolean) => void) => {
   const tour = new Shepherd.Tour({
@@ -21,59 +33,34 @@ const setupTour = (setTourStatus: (value: boolean) => void) => {
     },
   });
 
-  tour.addStep({
-    id: "example-step",
-    text: "Welcome to our site! Welcome to our site!Welcome to our site!Welcome to our site!", // This could be removed if CustomStep is mandatory
-    attachTo: {
-      element: null,
-      on: "bottom",
-    },
-    buttons: [
-      {
-        action: () => {
-          tour.next();
+  game_intro.forEach((text, index) => {
+    tour.addStep({
+      id: `intro-step-${index}`,
+      text: `<div id="typing-text-${index}"></div>`,
+      attachTo: {
+        element: null,
+        on: "bottom",
+      },
+      buttons: [
+        {
+          action: () => {
+            tour.next();
+          },
+          text: ">>",
         },
-        text: ">>",
-      },
-    ],
-    when: {
-      show: function () {
-        const stepElement = document.querySelector(".shepherd-step-content");
-        if (stepElement) {
-          ReactDOM.render(
-            <CustomStep text="Welcome to our site!" />,
-            stepElement
-          );
-        }
-      },
-    },
-  });
-  tour.addStep({
-    id: "example-step",
-    text: "Welcome to our site! Welcome to our site!Welcome to our site!Welcome to our site!", // This could be removed if CustomStep is mandatory
-    attachTo: {
-      element: null,
-      on: "bottom",
-    },
-    buttons: [
-      {
-        action: () => {
-          tour.next();
+      ],
+      when: {
+        show: function () {
+          const placeholder = document.querySelector(`#typing-text-${index}`);
+          if (placeholder) {
+            console.log("Placeholder found.");
+            ReactDOM.render(<TypingText text={text} />, placeholder);
+          } else {
+            console.log("Placeholder not found.");
+          }
         },
-        text: ">>",
       },
-    ],
-    when: {
-      show: function () {
-        const stepElement = document.querySelector(".shepherd-step-content");
-        if (stepElement) {
-          ReactDOM.render(
-            <CustomStep text="Welcome to our site!" />,
-            stepElement
-          );
-        }
-      },
-    },
+    });
   });
 
   tour.start();
@@ -88,10 +75,10 @@ const ShepHerdTour = ({ setTourStatus }: Props) => {
   return (
     <div
       id="shepherd-tour"
-      className="text-white bg-transparent w-full h-full absolute top-0 left-0 flex justify-center items-center z-10 backdrop-blur-md"
+      className="text-white bg-transparent w-full h-full absolute top-0 left-0 flex justify-center items-center z-10 backdrop-blur-lg"
     >
-      <div className="flex items-center space-x-4 mt-32 shep-tour-start">
-        <img src={StickMan} alt="Stick Man" className="w-4/12" />
+      <div className="flex items-center justify-between space-x-4 mr-24 ">
+        <img src={StickMan} alt="Stick Man" className="w-5/12" />
       </div>
     </div>
   );
