@@ -1,4 +1,8 @@
 import { useState } from "react";
+
+import { FaTrophy, FaRedo } from "react-icons/fa"; // Import icons
+import { SiAlienware } from "react-icons/si";
+
 import useSound from "use-sound";
 
 import Board from "./components/Board";
@@ -80,7 +84,7 @@ const App = () => {
     } else {
       setIsXTurn(!isXTurn); // Toggle turn if the game continues
     }
-    
+
     setIsXTurn(!isXTurn); // Toggle turn
   };
 
@@ -94,16 +98,30 @@ const App = () => {
       />
       <Score />
       {gameOver && (
-        <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-xl">
-          <div>
-            {winner === "Tie" ? "It's a Tie!" : `${winner} Wins!`}
-            <button
-              onClick={resetGame}
-              className="ml-4 p-2 bg-white text-black rounded"
-            >
-              Restart
-            </button>
+        <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
+          <div
+            className="text-white text-xl p-4 rounded-lg flex justify-center items-center flex-col gap-5"
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
+          >
+            {winner === "Tie" ? (
+              <>
+                <SiAlienware className=" text-[10rem]" />
+                <p className="text-3xl">It's a Tie!</p>
+              </>
+            ) : (
+              <>
+                <FaTrophy className=" text-[10rem]" />
+                <p className="text-3xl">{`${winner} Wins!`}</p>
+              </>
+            )}
           </div>
+          <button
+            onClick={resetGame}
+            className="mt-4 p-2 bg-white text-black rounded-md flex items-center px-5 py-2 text-xl font-semibold"
+          >
+            <FaRedo className="mr-2" /> {/* Redo icon for restart */}
+            Restart
+          </button>
         </div>
       )}
     </>
