@@ -23,6 +23,9 @@ const App = () => {
   const [animationTriggers, setAnimationTriggers] = useState<boolean[]>(
     Array(9).fill(false)
   );
+  const [playerWins, setPlayerWins] = useState(0);
+  const [computerWins, setComputerWins] = useState(0);
+  const [ties, setTies] = useState(0);
 
   const [playHighNote] = useSound(noteHigh, { volume: mute ? 0 : 1 });
   const [playLowNote] = useSound(noteLow, { volume: mute ? 0 : 1 });
@@ -85,10 +88,15 @@ const App = () => {
       setWinner(winner);
       playGameOver();
       setGameOver(true); // End the game
+      winner == "X"
+        ? setPlayerWins((prevWins) => prevWins + 1)
+        : setComputerWins((prevWins) => prevWins + 1);
     } else if (!newBoard.includes("")) {
       setWinner("Tie");
       playGameOverTie();
       setGameOver(true); // End the game if all cells are filled and no winner
+
+      setTies((prevTies) => prevTies + 1);
     } else {
       setIsXTurn(!isXTurn); // Toggle turn if the game continues
     }
@@ -104,7 +112,7 @@ const App = () => {
         handleCellClick={handleCellClick}
         animationTriggers={animationTriggers}
       />
-      <Score />
+      <Score playerWins={playerWins} computerWins={computerWins} ties={ties} />
       {gameOver && (
         <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
           <div
