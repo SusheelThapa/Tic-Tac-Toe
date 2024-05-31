@@ -11,6 +11,8 @@ import Score from "./components/Score";
 
 import noteHigh from "./assets/audio/note-high.mp3";
 import noteLow from "./assets/audio/note-low.mp3";
+import gameOverSound from "./assets/audio/game-over.mp3";
+import gameOverTieSound from "./assets/audio/game-over-tie.mp3";
 
 const App = () => {
   const [mute, setMute] = useState<boolean>(false);
@@ -24,6 +26,10 @@ const App = () => {
 
   const [playHighNote] = useSound(noteHigh, { volume: mute ? 0 : 1 });
   const [playLowNote] = useSound(noteLow, { volume: mute ? 0 : 1 });
+  const [playGameOver] = useSound(gameOverSound, { volume: mute ? 0 : 1 });
+  const [playGameOverTie] = useSound(gameOverTieSound, {
+    volume: mute ? 0 : 1,
+  });
 
   const checkForWinner = (squares: string[]) => {
     const lines = [
@@ -57,7 +63,7 @@ const App = () => {
   };
 
   const handleCellClick = (index: number) => {
-    if (board[index] !== "") return; // Prevent overwriting a cell
+    if (gameOver || board[index] !== "") return; // Prevent overwriting a cell
 
     const newBoard = [...board];
     const newTriggers = Array(9).fill(false); // Reset all triggers
@@ -77,9 +83,11 @@ const App = () => {
     const winner = checkForWinner(newBoard);
     if (winner) {
       setWinner(winner);
+      playGameOver();
       setGameOver(true); // End the game
     } else if (!newBoard.includes("")) {
       setWinner("Tie");
+      playGameOverTie();
       setGameOver(true); // End the game if all cells are filled and no winner
     } else {
       setIsXTurn(!isXTurn); // Toggle turn if the game continues
