@@ -10,9 +10,7 @@ const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={
-        shouldAnimate
-          ? { opacity: 1, scale: [0, 1.2, 1] }
-          : { opacity: 1 }
+        shouldAnimate ? { opacity: 1, scale: [0, 1.2, 1] } : { opacity: 1 }
       }
       transition={{ duration: 0.5 }}
       className="flex items-center justify-center w-full h-full"
@@ -42,16 +40,13 @@ const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={
-        shouldAnimate
-          ? { opacity: 1, scale: [0, 1.2, 1] }
-          : { opacity: 1 }
+        shouldAnimate ? { opacity: 1, scale: [0, 1.2, 1] } : { opacity: 1 }
       }
       transition={{ duration: 0.5 }}
       className="flex items-center justify-center w-full h-full"
-      
     >
       <div className="relative w-full h-full flex items-center justify-center">
-        <div className="border-8 border-white rounded-full w-4/5 h-4/5"></div>
+        <div className="border-[16px] border-white rounded-full w-4/5 h-4/5"></div>
       </div>
     </motion.div>
   );
