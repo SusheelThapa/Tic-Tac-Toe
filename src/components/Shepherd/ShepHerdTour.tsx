@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 import Shepherd from "shepherd.js";
 
+import useSound, { StopFunction } from "use-sound";
+
 import TypingText from "./TypingText";
 
 import StickMan from "../../assets/images/stickman.svg";
-
+import backgroundAudio from "../../assets/audio/backgroundd.mp3";
 import "../../assets/css/customCSS.css";
+import { FaPause, FaPlay } from "react-icons/fa";
 
 interface Props {
   setTourStatus: (value: boolean) => void;
@@ -22,9 +25,12 @@ const game_intro = [
   "Enjoy the game! Make every move count!",
 ];
 
-const setupTour = (setTourStatus: (value: boolean) => void) => {
+const setupTour = (
+  setTourStatus: (value: boolean) => void,
+  stop: StopFunction
+) => {
   const tour = new Shepherd.Tour({
-    useModalOverlay: true,
+    useModalOverlay: false,
     defaultStepOptions: {
       cancelIcon: {
         enabled: true,
@@ -64,23 +70,66 @@ const setupTour = (setTourStatus: (value: boolean) => void) => {
   });
 
   tour.start();
-  tour.on("complete", () => setTourStatus(false));
-  tour.on("cancel", () => setTourStatus(false));
+
+  ["complete", "cancel"].forEach((event) =>
+    Shepherd.on(event, () => {
+      setTourStatus(false);
+
+      stop();
+    })
+  );
 };
 
 const ShepHerdTour = ({ setTourStatus }: Props) => {
+  const [initialized, setInitialized] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false); // Track whether audio is playing
+  const [play, { stop }] = useSound(backgroundAudio, {
+    loop: true,
+    onend: () => setIsPlaying(false),
+  });
+
   useEffect(() => {
-    setupTour(setTourStatus);
-  }, [setTourStatus]);
+    if (!initialized) {
+      setupTour(setTourStatus, stop);
+      setInitialized(true);
+
+      return () => {
+        stop();
+        console.log("Component unmounted, audio stopped.");
+      };
+    }
+  }, [initialized, setTourStatus, play, stop]);
+
+  const togglePlay = () => {
+    console.log("Playing called");
+
+    if (isPlaying) {
+      stop();
+      setIsPlaying(false);
+    } else {
+      play();
+      setIsPlaying(true);
+    }
+    console.log(`Audio is now ${isPlaying ? "playing" : "stopped"}.`);
+  };
+
   return (
-    <div
-      id="shepherd-tour"
-      className="text-white bg-transparent w-full h-full absolute top-0 left-0 flex justify-center items-center z-10 backdrop-blur-lg"
-    >
-      <div className="flex items-center justify-between space-x-4 mr-24 ">
-        <img src={StickMan} alt="Stick Man" className="w-5/12" />
+    <>
+      <button
+        onClick={togglePlay}
+        className="play-pause-btn absolute top-4 right-4 bg-none border-none text-white text-2xl z-[20] cursor-pointer"
+      >
+        {isPlaying ? <FaPause /> : <FaPlay />}
+      </button>
+      <div
+        id="shepherd-tour"
+        className="text-white bg-transparent w-full h-full absolute top-0 left-0 flex justify-center items-center z-10 backdrop-blur-lg"
+      >
+        <div className="flex items-center justify-between space-x-4 mr-24 ">
+          <img src={StickMan} alt="Stick Man" className="w-5/12" />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
