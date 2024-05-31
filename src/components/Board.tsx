@@ -1,29 +1,58 @@
-
+import { motion } from "framer-motion";
 
 interface Props {
   board: string[];
   handleCellClick: (index: number) => void;
+  animationTriggers: boolean[];
 }
-const Board = ({ board, handleCellClick }: Props) => {
-  // Component for "X"
-  const X = () => (
-    <div className="relative w-full h-full flex items-center justify-center">
-      <div
-        className="absolute bg-white h-4 w-full transform -rotate-45"
-        style={{ top: "50%" }}
-      ></div>
-      <div
-        className="absolute bg-white h-4 w-full transform rotate-45"
-        style={{ top: "50%" }}
-      ></div>
-    </div>
+const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
+  const X = ({ shouldAnimate }: { shouldAnimate: boolean }) => (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={
+        shouldAnimate
+          ? { opacity: 1, scale: [0, 1.2, 1], rotate: [0, 360] }
+          : { opacity: 1 }
+      }
+      transition={{ duration: 0.5 }}
+      className="flex items-center justify-center w-full h-full"
+    >
+      <div className="relative w-full h-full">
+        <div
+          className="absolute bg-white h-4 w-full transform -rotate-45"
+          style={{
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%) rotate(-45deg)",
+          }}
+        />
+        <div
+          className="absolute bg-white h-4 w-full transform rotate-45"
+          style={{
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%) rotate(45deg)",
+          }}
+        />
+      </div>
+    </motion.div>
   );
 
-  // Component for "O"
-  const O = () => (
-    <div className="relative w-full h-full flex items-center justify-center">
-      <div className="border-[16px] border-white rounded-full w-4/5 h-4/5"></div>
-    </div>
+  const O = ({ shouldAnimate }: { shouldAnimate: boolean }) => (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={
+        shouldAnimate
+          ? { opacity: 1, scale: [0, 1.2, 1], rotate: [0, 360] }
+          : { opacity: 1 }
+      }
+      transition={{ duration: 0.5 }}
+      className="flex items-center justify-center w-full h-full"
+    >
+      <div className="relative w-full h-full flex items-center justify-center">
+        <div className="border-8 border-white rounded-full w-4/5 h-4/5"></div>
+      </div>
+    </motion.div>
   );
 
   return (
@@ -38,7 +67,12 @@ const Board = ({ board, handleCellClick }: Props) => {
             className="w-full h-full flex items-center justify-center p-4 cursor-pointer"
             onClick={() => handleCellClick(index)}
           >
-            {cell === "X" ? <X /> : cell === "O" ? <O /> : null}
+            {cell === "X" ? (
+              <X shouldAnimate={animationTriggers[index]} />
+            ) : null}
+            {cell === "O" ? (
+              <O shouldAnimate={animationTriggers[index]} />
+            ) : null}
           </div>
         ))}
         {/* Vertical Lines */}

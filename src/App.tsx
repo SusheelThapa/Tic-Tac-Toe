@@ -12,31 +12,36 @@ const App = () => {
   const [mute, setMute] = useState<boolean>(false);
   const [board, setBoard] = useState(Array(9).fill(""));
   const [isXTurn, setIsXTurn] = useState(true);
+  const [animationTriggers, setAnimationTriggers] = useState<boolean[]>(Array(9).fill(false));
 
   const [playHighNote] = useSound(noteHigh, { volume: mute ? 0 : 1 });
   const [playLowNote] = useSound(noteLow, { volume: mute ? 0 : 1 });
 
   const handleCellClick = (index: number) => {
+    if (board[index] !== '') return;  // Prevent overwriting a cell
+
     const newBoard = [...board];
-    // Check if the cell is already filled
-    if (newBoard[index] === "") {
-      newBoard[index] = isXTurn ? "X" : "O";
-      setBoard(newBoard);
+    const newTriggers = Array(9).fill(false); // Reset all triggers
 
-      if (isXTurn) {
-        playHighNote();
-      } else {
-        playLowNote();
-      }
+    newBoard[index] = isXTurn ? 'X' : 'O';
+    newTriggers[index] = true; // Trigger animation only for the clicked cell
 
-      setIsXTurn(!isXTurn); // Toggle turn
+    setBoard(newBoard);
+    setAnimationTriggers(newTriggers);
+
+    if (isXTurn) {
+      playHighNote();
+    } else {
+      playLowNote();
     }
+
+    setIsXTurn(!isXTurn);  // Toggle turn
   };
 
   return (
     <>
       <Header mute={mute} handleMuteButton={setMute} />
-      <Board board={board} handleCellClick={handleCellClick} />
+      <Board board={board} handleCellClick={handleCellClick}  animationTriggers={animationTriggers} />
       <Score />
     </>
   );
