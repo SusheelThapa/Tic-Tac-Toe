@@ -1,8 +1,19 @@
+import { useState } from "react";
+import Board from "./components/Board";
+import Header from "./components/Header";
+import Score from "./components/Score";
+
 const App = () => {
+  const [mute, setMute] = useState<boolean>(false);
+
+
+
   return (
-    <div className="flex justify-center items-center text-7xl bg-black text-white h-screen">
-      Hello World
-    </div>
+    <>
+      <Header mute={mute} handleMuteButton={setMute}/>
+      <Board />
+      <Score />
+    </>
   );
 };
 
