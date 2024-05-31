@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { FaTrophy, FaRedo } from "react-icons/fa"; // Import icons
 import { SiAlienware } from "react-icons/si";
@@ -13,6 +13,28 @@ import noteHigh from "./assets/audio/note-high.mp3";
 import noteLow from "./assets/audio/note-low.mp3";
 import gameOverSound from "./assets/audio/game-over.mp3";
 import gameOverTieSound from "./assets/audio/game-over-tie.mp3";
+
+import { playComputerMove } from "./utils/playComputerMove";
+
+export const checkForWinner = (squares: string[]) => {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8], // rows
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8], // columns
+    [0, 4, 8],
+    [2, 4, 6], // diagonals
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+};
 
 const App = () => {
   const [mute, setMute] = useState<boolean>(false);
@@ -34,29 +56,17 @@ const App = () => {
     volume: mute ? 0 : 1,
   });
 
-  const checkForWinner = (squares: string[]) => {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8], // rows
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8], // columns
-      [0, 4, 8],
-      [2, 4, 6], // diagonals
-    ];
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (
-        squares[a] &&
-        squares[a] === squares[b] &&
-        squares[a] === squares[c]
-      ) {
-        return squares[a];
+  useEffect(() => {
+    // Automatically let the computer play if it is their turn and the game is not over
+    if (!isXTurn && !gameOver) {
+      const computerIndex = playComputerMove(board);
+      console.log(computerIndex);
+      if (computerIndex !== -1) {
+        setTimeout(() => handleCellClick(computerIndex, false), 500); // Delay computer move to simulate thinking and allow animations
       }
     }
-    return null;
-  };
+    console.log("useEffectg called");
+  }, [isXTurn, gameOver, board]); // Dependency array to trigger effect on turn change or game status change
 
   const resetGame = () => {
     setBoard(Array(9).fill(""));
@@ -65,7 +75,7 @@ const App = () => {
     setWinner(null);
   };
 
-  const handleCellClick = (index: number) => {
+  const handleCellClick = (index: number, player = true) => {
     if (gameOver || board[index] !== "") return; // Prevent overwriting a cell
 
     const newBoard = [...board];
@@ -77,20 +87,19 @@ const App = () => {
     setBoard(newBoard);
     setAnimationTriggers(newTriggers);
 
-    if (isXTurn) {
-      playHighNote();
-    } else {
-      playLowNote();
-    }
+    const currentNote = player ? playHighNote : playLowNote;
+    currentNote(); // Play the respective sound note
 
     const winner = checkForWinner(newBoard);
     if (winner) {
       setWinner(winner);
-      playGameOver();
       setGameOver(true); // End the game
-      winner == "X"
+
+      winner === "X"
         ? setPlayerWins((prevWins) => prevWins + 1)
         : setComputerWins((prevWins) => prevWins + 1);
+
+      playGameOver();
     } else if (!newBoard.includes("")) {
       setWinner("Tie");
       playGameOverTie();
@@ -98,10 +107,8 @@ const App = () => {
 
       setTies((prevTies) => prevTies + 1);
     } else {
-      setIsXTurn(!isXTurn); // Toggle turn if the game continues
+      setIsXTurn(!isXTurn);
     }
-
-    setIsXTurn(!isXTurn); // Toggle turn
   };
 
   return (
