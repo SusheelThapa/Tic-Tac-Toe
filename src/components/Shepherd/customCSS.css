@@ -1,0 +1,38 @@
+.shepherd-theme-custom {
+    background-color: transparent !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    padding: 20px !important;
+    color: white !important;
+
+    font-weight: 600 !important;
+    letter-spacing: 2px !important;
+}
+
+.shepherd-element {
+    background-color: transparent !important;
+}
+
+.shepherd-theme-custom>.shepherd-content>.shepherd-text {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.shepherd-theme-custom>.shepherd-content>.shepherd-header {
+    display: none
+}
+
+.shepherd-theme-custom>.shepherd-content {
+    width: 45vw !important;
+}
+
+.shepherd-theme-custom>.shepherd-content>.shepherd-footer>.shepherd-button {
+    background-color: black !important;
+    color: white !important;
+    font-size: 1.6rem;
+    font-weight: 900 !important;
+}
+
+.shepherd-modal-overlay-container.shepherd-modal-is-visible {
+    opacity: 0 !important;
+}

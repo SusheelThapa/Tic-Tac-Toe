@@ -15,6 +15,7 @@ import gameOverSound from "./assets/audio/game-over.mp3";
 import gameOverTieSound from "./assets/audio/game-over-tie.mp3";
 
 import { playComputerMove } from "./utils/playComputerMove";
+import ShepHerdTour from "./components/Shepherd/ShepHerdTour";
 
 export const checkForWinner = (squares: string[]) => {
   const lines = [
@@ -37,6 +38,8 @@ export const checkForWinner = (squares: string[]) => {
 };
 
 const App = () => {
+  const [tour_status, setTourStatus] = useState<boolean>(true);
+
   const [mute, setMute] = useState<boolean>(false);
   const [board, setBoard] = useState(Array(9).fill(""));
   const [isXTurn, setIsXTurn] = useState(true);
@@ -113,40 +116,47 @@ const App = () => {
 
   return (
     <>
-      <Header mute={mute} handleMuteButton={setMute} />
-      <Board
-        board={board}
-        handleCellClick={handleCellClick}
-        animationTriggers={animationTriggers}
-      />
-      <Score playerWins={playerWins} computerWins={computerWins} ties={ties} />
-      {gameOver && (
-        <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
-          <div
-            className="text-white text-xl p-4 rounded-lg flex justify-center items-center flex-col gap-5"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
-          >
-            {winner === "Tie" ? (
-              <>
-                <SiAlienware className=" text-[10rem]" />
-                <p className="text-3xl">It's a Tie!</p>
-              </>
-            ) : (
-              <>
-                <FaTrophy className=" text-[10rem]" />
-                <p className="text-3xl">{`${winner} Wins!`}</p>
-              </>
-            )}
+      {tour_status && <ShepHerdTour setTourStatus={setTourStatus} />}
+      <div className={tour_status ? "z-0" : ""}>
+        <Header mute={mute} handleMuteButton={setMute} />
+        <Board
+          board={board}
+          handleCellClick={handleCellClick}
+          animationTriggers={animationTriggers}
+        />
+        <Score
+          playerWins={playerWins}
+          computerWins={computerWins}
+          ties={ties}
+        />
+        {gameOver && (
+          <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
+            <div
+              className="text-white text-xl p-4 rounded-lg flex justify-center items-center flex-col gap-5"
+              style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
+            >
+              {winner === "Tie" ? (
+                <>
+                  <SiAlienware className=" text-[10rem]" />
+                  <p className="text-3xl">It's a Tie!</p>
+                </>
+              ) : (
+                <>
+                  <FaTrophy className=" text-[10rem]" />
+                  <p className="text-3xl">{`${winner} Wins!`}</p>
+                </>
+              )}
+            </div>
+            <button
+              onClick={resetGame}
+              className="mt-4 p-2 bg-white text-black rounded-md flex items-center px-5 py-2 text-xl font-semibold"
+            >
+              <FaRedo className="mr-2" /> {/* Redo icon for restart */}
+              Restart
+            </button>
           </div>
-          <button
-            onClick={resetGame}
-            className="mt-4 p-2 bg-white text-black rounded-md flex items-center px-5 py-2 text-xl font-semibold"
-          >
-            <FaRedo className="mr-2" /> {/* Redo icon for restart */}
-            Restart
-          </button>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };
