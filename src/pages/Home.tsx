@@ -16,26 +16,13 @@ import Shepherd from "shepherd.js";
 import { PopperPlacement } from "shepherd.js/step";
 import { Tour } from "shepherd.js/tour";
 import "../assets/css/howToPlay.css";
+import { HowToPlay } from "../types/types";
 
-export const checkForWinner = (squares: string[]) => {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8], // rows
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8], // columns
-    [0, 4, 8],
-    [2, 4, 6], // diagonals
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-};
+import { howToPlay } from "../assets/json/how_to_play.json";
+import { cleanupLastHighlighted, toggleHighlight } from "../utils/highlight";
+import { checkForWinner } from "../utils/tictactok";
+
+
 
 const Home = () => {
   const [tour_status, setTourStatus] = useState<boolean>(true);
@@ -127,151 +114,7 @@ const Home = () => {
     },
   });
 
-  const tourSteps: {
-    title: string;
-    text: string;
-    element: null | string;
-    position: string;
-    highlight: boolean;
-  }[] = [
-    {
-      title: "Welcome",
-      text: "I'm Agent T., and I will guide you through the features of our tic-tac-toe game.",
-      element: null,
-      position: "bottom",
-      highlight: false,
-    },
-    {
-      title: "Game Header",
-      text: "Here in the game's header section, you can find the game title and access various controls.",
-      element: "#header",
-      position: "bottom",
-      highlight: true,
-    },
-    {
-      title: "Home",
-      text: "This is the Home section. Click here to return to the main page of the game.",
-      element: "#home",
-      position: "bottom",
-      highlight: true,
-    },
-    {
-      title: "How to Play",
-      text: "Click here to learn how to play the game. This section provides detailed instructions and tips.",
-      element: "#how-to-play",
-      position: "bottom",
-      highlight: true,
-    },
-    {
-      title: "Developer",
-      text: "This section contains information about the developer behind it.",
-      element: "#about",
-      position: "bottom",
-      highlight: true,
-    },
-    {
-      title: "FAQ",
-      text: "Here you can find answers to frequently asked questions about the game.",
-      element: "#faq",
-      position: "bottom",
-      highlight: true,
-    },
-    {
-      title: "Vote on Quine",
-      text: "If you like our project, you can vote for us here. Just click the upvote icon!",
-      element: "#quine-vote",
-      position: "bottom",
-      highlight: false,
-    },
-    {
-      title: "Github Repository",
-      text: "Interested in how this game was built or want to contribute? <br/> Click on the GitHub icon to visit our repository where you can find the source code and project details.",
-      element: "#github-repository",
-      position: "bottom",
-      highlight: false,
-    },
-    {
-      title: "Sound Toggle",
-      text: "This button lets you toggle the game's sound. <br/> Click here to mute or unmute the game sounds.",
-      element: "#mute-unmute-button",
-      position: "bottom",
-      highlight: false,
-    },
-    {
-      title: "Game Board",
-      text: "This is the main tic-tac-toe board where the game is played. <br/> Click on any empty cell to make a move.",
-      element: "#tic-tac-toe-board",
-      position: "left",
-      highlight: true,
-    },
-    {
-      title: "Game Over Screen",
-      text: "This is the game-over screen. <br/> It appears when the game has ended, either in a win, loss, or tie. Here you'll see who won the game and have the option to restart the game.",
-      element: "#game-over-screen",
-      position: "top", // Position can be adjusted based on your actual layout
-      highlight: true,
-    },
-    {
-      title: "Restart Button",
-      text: "When you're ready to play again, just click this restart button. <br/> It will reset the board and start a new game.",
-      element: "#restart-button",
-      position: "bottom",
-      highlight: false,
-    },
-    {
-      title: "Game Score",
-      text: "Here you can view the current game score. <br/> This area updates with each move to show who's leading.",
-      element: "#game-score",
-      position: "left",
-      highlight: true,
-    },
-    {
-      title: "Player Wins",
-      text: "This section displays the total number of games you've won. <br/> Each victory in the game increases this count.",
-      element: "#player-won-score",
-      position: "bottom",
-      highlight: false,
-    },
-    {
-      title: "Game Ties",
-      text: "This score counts the number of games that have ended in a tie. <br/> It updates whenever a game ends without a winner.",
-      element: "#game-tie-score",
-      position: "bottom",
-      highlight: false,
-    },
-    {
-      title: "Agent T. Wins",
-      text: "This shows how many games the computer has won. <br/> It's updated each time the computer scores a victory.",
-      element: "#computer-won-score",
-      position: "bottom",
-      highlight: false,
-    },
-    {
-      title: "Over to you",
-      text: "That's all for now! <br/> I hope you enjoy playing the game. <br/> Signing off, Agent T.",
-      element: null, // Or another element that could signify the end of the tour
-      position: "top",
-      highlight: false,
-    },
-  ];
-
-  function toggleHighlight(elementId: string | null, action: string) {
-    if (elementId) {
-      const element = document.querySelector(elementId);
-      if (element) {
-        element.classList[action as "add" | "remove"]("highlighted");
-      }
-    }
-  }
-
-  function cleanupLastHighlighted() {
-    if (tourSteps.length > 0) {
-      const lastStep = tourSteps[tourSteps.length - 1];
-      if (lastStep.highlight) {
-        toggleHighlight(lastStep.element, "remove");
-      }
-    }
-  }
+  const tourSteps: HowToPlay[] = howToPlay;
 
   const displayProgressBar = () => {
     const currentStepElement = how_to_play.currentStep
@@ -374,6 +217,7 @@ const Home = () => {
 
   how_to_play.on("complete", cleanupLastHighlighted);
   how_to_play.on("cancel", cleanupLastHighlighted);
+
   const status = localStorage.getItem("shepherd-tour") != "yes";
   return (
     <>

@@ -1,5 +1,4 @@
-import { checkForWinner } from "../pages/Home";
-// playComputerMove.ts
+import { checkForWinner } from "./tictactok";
 
 export const playComputerMove = (board: string[]): number => {
   const minimax = (board: string[], depth: number, isMax: boolean): number => {
