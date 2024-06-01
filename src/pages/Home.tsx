@@ -163,8 +163,8 @@ const Home = () => {
       highlight: true,
     },
     {
-      title: "About",
-      text: "This section contains information about the game and the team behind it.",
+      title: "Developer",
+      text: "This section contains information about the developer behind it.",
       element: "#about",
       position: "bottom",
       highlight: true,

@@ -48,7 +48,7 @@ const Header = ({ mute, handleMuteButton, how_to_play }: Props) => {
           </span>
         </li>
         <li className="relative group cursor-pointer p-2 px-4" id="faq">
-          FAQ
+          <Link to='/faq'>FAQ</Link>
           <span className="font-semibold absolute left-1/2 transform -translate-x-1/2 translate-y-10 invisible group-hover:visible bg-white text-black text-sm tracking-widest rounded-md py-1 px-2 whitespace-nowrap">
             Frequently Asked Questions
           </span>
