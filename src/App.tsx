@@ -305,7 +305,7 @@ const App = () => {
     }
   };
 
-  tourSteps.forEach((step, index) => {
+  tourSteps.forEach((step) => {
     how_to_play.addStep({
       title: step.title,
       text: step.text,
@@ -330,7 +330,16 @@ const App = () => {
             },
           },
       buttons:
-        index !== 0
+        step.title === "Welcome"
+          ? [
+              {
+                action() {
+                  return this.next();
+                },
+                text: "Next",
+              },
+            ]
+          : step.title === "Over to you"
           ? [
               {
                 action() {
@@ -343,15 +352,15 @@ const App = () => {
                 action() {
                   return this.next();
                 },
-                text: "Next",
+                text: "End Tour",
               },
             ]
           : [
               {
                 action() {
-                  return this.cancel();
+                  return this.back();
                 },
-                text: "Skip",
+                text: "Back",
               },
               {
                 action() {
