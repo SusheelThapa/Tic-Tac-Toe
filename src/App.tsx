@@ -337,10 +337,10 @@ const App = () => {
 
   how_to_play.on("complete", cleanupLastHighlighted);
   how_to_play.on("cancel", cleanupLastHighlighted);
-
+  const status = localStorage.getItem("shepherd-tour") != "yes";
   return (
     <>
-      {tour_status && <ShepHerdTour setTourStatus={setTourStatus} />}
+      {tour_status && status && <ShepHerdTour setTourStatus={setTourStatus} />}
       <div className={tour_status ? "z-0" : "flex flex-col"}>
         <Header
           mute={mute}

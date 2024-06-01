@@ -18,16 +18,13 @@ interface Props {
 }
 
 const game_intro = [
-  "Hello Chief! I'm Agent Tacton, your advanced tactical guide. Are you ready to revolutionize the way you play Tic Tac Toe?",
-  "Let's take a moment to consider the environment. Each year, millions of trees are cut down, contributing to habitat loss, climate change, and air pollution. Traditionally, even simple games like Tic Tac Toe have contributed to this through the use of paper.",
-  "That's why we've brought you this digital version. By playing Tic Tac Toe here, you’re not just saving paper—you’re helping to preserve our planet’s precious resources.",
-  "In this digital arena, every strategic move you make is eco-friendly. You'll battle against me, Agent Tacton, in a high-tech challenge that tests your wits while protecting nature.",
-  "As we play, remember that each decision should be made with care and foresight. Think of this game as a metaphor for the choices we face in protecting our environment.",
-  "Here’s a tip: Predicting my moves is akin to anticipating the effects of our actions on the environment. Plan wisely and think sustainability.",
-  "So, are you ready to challenge your mind and make a difference? Every game you play here contributes to less waste and less environmental strain.",
-  "I’m excited to see how you'll tackle these challenges. Are you prepared to outsmart me in a game that benefits our world? Let the match begin!",
-  "Remember, every game played digitally is a leaf that stays on a tree. Let’s play smart, play green, and try to win this game!",
-  "Ready to leave a positive impact without leaving a carbon footprint? Game on, Chief! Let’s make every move count.",
+  "Hello Chief! I'm Agent Tacton, your tactical guide. Ready to revolutionize Tic Tac Toe?",
+  "Each year, millions of trees are cut down, impacting our planet. Traditional Tic Tac Toe contributes to this by using paper.",
+  "With this digital version, you’re saving paper and helping preserve our planet's resources.",
+  "In this eco-friendly digital arena, every strategic move you make protects nature. You'll challenge me, Agent Tacton, in a high-tech, environmentally conscious game.",
+  "Remember, each decision here reflects the choices we face in protecting our environment. Plan wisely and think sustainably.",
+  "Are you ready to challenge your mind and make a difference? Every game played here means less waste and less strain on our environment.",
+  "Let’s play smart, play green, and win this game! Ready to make a positive impact? Game on, Chief!",
 ];
 
 const setupTour = (
@@ -79,7 +76,7 @@ const setupTour = (
   ["complete", "cancel"].forEach((event) =>
     Shepherd.on(event, () => {
       setTourStatus(false);
-
+      localStorage.setItem("shepherd-tour", "yes");
       stop();
     })
   );
@@ -95,9 +92,10 @@ const ShepHerdTour = ({ setTourStatus }: Props) => {
 
   useEffect(() => {
     if (!initialized) {
-      setupTour(setTourStatus, stop);
-      setInitialized(true);
-
+      if (localStorage.getItem("shepherd-tour") != "yes") {
+        setupTour(setTourStatus, stop);
+        setInitialized(true);
+      }
       return () => {
         stop();
         console.log("Component unmounted, audio stopped.");
