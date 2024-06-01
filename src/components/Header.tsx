@@ -13,13 +13,13 @@ interface Props {
 
 const Header = ({ mute, handleMuteButton, how_to_play }: Props) => {
   return (
-    <div className="flex justify-between items-center mx-10 gap-10 pt-4">
+    <div className="flex justify-between items-center mx-4 sm:mx-10 gap-4 sm:gap-10 pt-4">
       <div className="rounded-md">
-        <img src={logo} alt="logo" className="w-20" />
+        <img src={logo} alt="logo" className="w-16 sm:w-20" />
       </div>
       <ul
         id="header"
-        className="px-16 mx-10 flex justify-start items-center list-none w-full text-lg font-semibold tracking-widest"
+        className="px-4 sm:px-16 mx-4 sm:mx-10 flex justify-start items-center list-none w-full text-base sm:text-lg font-semibold tracking-widest"
       >
         <li
           className="hover:shadow-sm cursor-pointer "
@@ -28,12 +28,15 @@ const Header = ({ mute, handleMuteButton, how_to_play }: Props) => {
           How to play?
         </li>
       </ul>
-      <div id="quine-vote" className="text-3xl cursor-pointer m-1">
+      <div id="quine-vote" className="text-2xl sm:text-3xl cursor-pointer m-1">
         <a href="#">
           <BiSolidUpvote />
         </a>
       </div>
-      <div id="github-repository" className="text-3xl cursor-pointer m-1">
+      <div
+        id="github-repository"
+        className="text-2xl sm:text-3xl cursor-pointer m-1"
+      >
         <a href="https://github.com/SusheelThapa/Tic-Tac-Toe">
           <FaGithub />
         </a>
@@ -41,7 +44,7 @@ const Header = ({ mute, handleMuteButton, how_to_play }: Props) => {
 
       <div
         id="mute-unmute-button"
-        className="text-3xl cursor-pointer m-1"
+        className="text-2xl sm:text-3xl cursor-pointer m-1"
         onClick={() => handleMuteButton(!mute)}
       >
         {mute ? <GoMute /> : <GoUnmute />}

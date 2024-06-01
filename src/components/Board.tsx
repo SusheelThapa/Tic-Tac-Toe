@@ -54,8 +54,7 @@ const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
   return (
     <div className="bg-black p-10 flex items-center justify-center">
       <div
-        className="grid grid-cols-3 grid-rows-3 gap-4 relative m-4"
-        style={{ width: "36rem", height: "36rem" }}
+        className="grid grid-cols-3 grid-rows-3 gap-4 relative m-4 sm:w-[24rem] sm:h-[24rem] lg:w-[36rem] lg:h-[36rem]"
         id="tic-tac-toe-board"
       >
         {board.map((cell, index) => (

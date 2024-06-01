@@ -284,7 +284,7 @@ const App = () => {
   return (
     <>
       {tour_status && <ShepHerdTour setTourStatus={setTourStatus} />}
-      <div className={tour_status ? "z-0" : ""}>
+      <div className={tour_status ? "z-0" : "flex flex-col"}>
         <Header
           mute={mute}
           handleMuteButton={setMute}
