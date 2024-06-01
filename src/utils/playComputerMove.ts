@@ -1,4 +1,4 @@
-import { checkForWinner } from "./../App";
+import { checkForWinner } from "../pages/Home";
 // playComputerMove.ts
 
 export const playComputerMove = (board: string[]): number => {
