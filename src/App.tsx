@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { FaTrophy, FaRedo } from "react-icons/fa"; // Import icons
 import { SiAlienware } from "react-icons/si";
 
+// @ts-ignore
 import useSound from "use-sound";
 
 import Board from "./components/Board";
