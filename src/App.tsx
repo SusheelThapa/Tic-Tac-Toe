@@ -143,7 +143,7 @@ const App = () => {
       highlight: true,
     },
     {
-      text: 'If you like our project, you can vote for us here. Just click the upvote icon!',
+      text: "If you like our project, you can vote for us here. Just click the upvote icon!",
       element: "#quine-vote",
       position: "bottom",
       highlight: false,
@@ -226,7 +226,7 @@ const App = () => {
     }
   }
 
-  tourSteps.forEach((step) => {
+  tourSteps.forEach((step, index) => {
     how_to_play.addStep({
       text: step.text,
       attachTo: {
@@ -239,14 +239,42 @@ const App = () => {
             hide: () => toggleHighlight(step.element, "remove"),
           }
         : {},
-      buttons: [
-        {
-          action() {
-            return this.next();
-          },
-          text: "Next",
-        },
-      ],
+      buttons:
+        index !== 0
+          ? [
+              {
+                action() {
+                  return this.back();
+                },
+                text: "Back",
+              },
+              {
+                action() {
+                  return this.cancel();
+                },
+                text: "Skip",
+              },
+              {
+                action() {
+                  return this.next();
+                },
+                text: "Next",
+              },
+            ]
+          : [
+              {
+                action() {
+                  return this.cancel();
+                },
+                text: "Skip",
+              },
+              {
+                action() {
+                  return this.next();
+                },
+                text: "Next",
+              },
+            ],
     });
   });
 
