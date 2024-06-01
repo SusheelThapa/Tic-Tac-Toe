@@ -13,7 +13,7 @@ import gameOverTieSound from "../assets/audio/game-over-tie.mp3";
 import { playComputerMove } from "../utils/playComputerMove";
 import ShepHerdTour from "../components/Shepherd/ShepHerdTour";
 import Shepherd from "shepherd.js";
-import { PopperPlacement } from "shepherd.js/step";
+import { PopperPlacement, Step, StepOptions } from "shepherd.js/step";
 import { Tour } from "shepherd.js/tour";
 import "../assets/css/howToPlay.css";
 import { TourStep } from "../types/types";
@@ -101,9 +101,6 @@ const Home = () => {
   const how_to_play: Tour = new Shepherd.Tour({
     useModalOverlay: true,
     defaultStepOptions: {
-      exitOnEsc: true,
-      confirmCancelMessage: true,
-      keyboardNavigation: true,
       classes: "shepherd-theme-light",
       cancelIcon: {
         enabled: true,
@@ -115,9 +112,6 @@ const Home = () => {
   const start_tour: Tour = new Shepherd.Tour({
     useModalOverlay: true,
     defaultStepOptions: {
-      exitOnEsc: true,
-      confirmCancelMessage: true,
-      keyboardNavigation: true,
       classes: "shepherd-theme-light",
       cancelIcon: {
         enabled: true,
@@ -154,17 +148,17 @@ const Home = () => {
             },
           },
       buttons: [
-        ...(index !== 0 ? [{ text: "Back", action: start_tour.back }] : []),
+        ...(index !== 0 ? [{ text: "Back", action: how_to_play.back }] : []),
         {
-          text: index === startTourSteps.length - 1 ? "End Tour" : "Next",
-          action: start_tour.next,
+          text: index === howToPlaySteps.length - 1 ? "End Tour" : "Next",
+          action: how_to_play.next,
         },
       ],
     });
   });
 
   startTourSteps.forEach((step, index) => {
-    let stepConfig = {
+    let stepConfig: Step | StepOptions = {
       title: step.title,
       text: step.text,
       attachTo: {
@@ -213,7 +207,7 @@ const Home = () => {
           },
         };
         break;
-        
+
       case "Developer Section":
         stepConfig = {
           ...stepConfig,

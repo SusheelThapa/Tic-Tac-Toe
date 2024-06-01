@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../components/Header";
 import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
 import susheel from "../assets/images/susheel.jpeg";

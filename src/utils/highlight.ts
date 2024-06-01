@@ -1,4 +1,4 @@
-import { HowToPlay } from "../types/types";
+import { TourStep } from "../types/types";
 
 export const toggleHighlight = (elementId: string | null, action: string) => {
   if (elementId) {
@@ -9,7 +9,7 @@ export const toggleHighlight = (elementId: string | null, action: string) => {
   }
 };
 
-export const cleanupLastHighlighted = (tourSteps: HowToPlay[]) => {
+export const cleanupLastHighlighted = (tourSteps: TourStep[]) => {
   if (tourSteps.length > 0) {
     const lastStep = tourSteps[tourSteps.length - 1];
     if (lastStep.highlight) {
