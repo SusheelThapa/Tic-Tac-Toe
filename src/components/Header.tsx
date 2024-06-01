@@ -4,6 +4,7 @@ import logo from "../assets/images/logo.png";
 import { GoMute } from "react-icons/go";
 import { GoUnmute } from "react-icons/go";
 import { Tour } from "shepherd.js/tour";
+import { Link } from "react-router-dom";
 
 interface Props {
   mute: boolean;
@@ -25,21 +26,25 @@ const Header = ({ mute, handleMuteButton, how_to_play }: Props) => {
         className="px-4 sm:px-16 mx-4 sm:mx-10 flex justify-start items-center list-none w-full text-base sm:text-lg font-semibold tracking-widest gap-16"
       >
         <li className="relative group cursor-pointer p-2 px-4" id="home">
-          Home
+          <Link to="/">Home</Link>
           <span className="font-semibold absolute left-1/2 transform -translate-x-1/2 translate-y-10 invisible group-hover:visible bg-white text-black text-sm tracking-widest rounded-md py-1 px-2 whitespace-nowrap">
             Go to Home
           </span>
         </li>
-        <li className="relative group cursor-pointer p-2 px-4" id="how-to-play" onClick={() => how_to_play.start()}>
+        <li
+          className="relative group cursor-pointer p-2 px-4"
+          id="how-to-play"
+          onClick={() => how_to_play.start()}
+        >
           How to play?
           <span className="font-semibold absolute left-1/2 transform -translate-x-1/2 translate-y-10 invisible group-hover:visible bg-white text-black text-sm tracking-widest rounded-md py-1 px-2 whitespace-nowrap">
             Learn How to Play
           </span>
         </li>
         <li className="relative group cursor-pointer p-2 px-4" id="about">
-          About
+          <Link to="/developer">Developer</Link>
           <span className="font-semibold absolute left-1/2 transform -translate-x-1/2 translate-y-10 invisible group-hover:visible bg-white text-black text-sm tracking-widest rounded-md py-1 px-2 whitespace-nowrap">
-            About Us
+            Know about developer
           </span>
         </li>
         <li className="relative group cursor-pointer p-2 px-4" id="faq">
