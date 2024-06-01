@@ -126,6 +126,9 @@ const App = () => {
       },
       classes: "shepherd-theme-light",
       scrollTo: { behavior: "smooth", block: "center" },
+      when: {
+        show() {},
+      },
     },
   });
 
@@ -226,6 +229,31 @@ const App = () => {
     }
   }
 
+  const displayProgressBar = () => {
+    console.log("display called");
+
+    const currentStepElement = how_to_play.currentStep.el;
+    const footer = currentStepElement.querySelector(".shepherd-footer");
+
+    const progressContainer = document.createElement("div");
+    const progressBar = document.createElement("span");
+
+    progressContainer.className = "shepherd-progress-bar";
+    const progressPercentage =
+      ((how_to_play.steps.indexOf(how_to_play.currentStep) + 1) /
+        how_to_play.steps.length) *
+        100 +
+      "%";
+    progressBar.style.width = progressPercentage;
+
+    progressContainer.appendChild(progressBar);
+    footer.insertBefore(
+      progressContainer,
+      currentStepElement.querySelector(".shepherd-button")
+    );
+    console.log(footer);
+  };
+
   tourSteps.forEach((step, index) => {
     how_to_play.addStep({
       text: step.text,
@@ -235,10 +263,20 @@ const App = () => {
       },
       when: step.highlight
         ? {
-            show: () => toggleHighlight(step.element, "add"),
-            hide: () => toggleHighlight(step.element, "remove"),
+            show() {
+              toggleHighlight(step.element, "add");
+              displayProgressBar();
+            },
+            hide: () => {
+              toggleHighlight(step.element, "remove");
+              displayProgressBar();
+            },
           }
-        : {},
+        : {
+            show() {
+              displayProgressBar();
+            },
+          },
       buttons:
         index !== 0
           ? [
@@ -248,12 +286,7 @@ const App = () => {
                 },
                 text: "Back",
               },
-              {
-                action() {
-                  return this.cancel();
-                },
-                text: "Skip",
-              },
+
               {
                 action() {
                   return this.next();

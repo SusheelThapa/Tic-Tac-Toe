@@ -11,10 +11,6 @@
     color: whitesmoke !important;
 }
 
-.shepherd-theme-light>.shepherd-content>.shepherd-header {
-    display: none
-}
-
 .shepherd-theme-light>.shepherd-content>.shepherd-footer>.shepherd-button {
     background-color: black !important;
     color: white !important;
@@ -29,4 +25,28 @@
     border-radius: 10px;
     border: groove;
 
+}
+
+.shepherd-theme-light>.shepherd-content>.shepherd-footer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+}
+
+.shepherd-theme-light>.shepherd-content>.shepherd-footer>.shepherd-progress-bar {
+    font-size: 14px;
+    border-radius: 9px;
+    height: 20px;
+    width: 100%;
+    max-width: 180px;
+    padding: 4px;
+    background: #e6e6e6;
+}
+
+.shepherd-progress-bar span {
+    display: block;
+    background: black;
+    height: 100%;
+    border-radius: 9px;
 }
