@@ -30,12 +30,12 @@ const FAQ: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="mt-[2rem]">
+      <div className="mt-[1rem]">
         <div className="bg-black text-white p-8">
           <h1 className="text-4xl font-bold text-center mb-8 my-10">
             Frequently Asked Questions
           </h1>
-          <div className="max-w-4xl mx-auto mt-10">
+          <div className="max-w-4xl mx-auto mt-10" id="faq-section">
             {currentItems.map((item, index) => (
               <div key={index} className="mb-6">
                 <div
@@ -51,7 +51,7 @@ const FAQ: React.FC = () => {
                 )}
               </div>
             ))}
-            <div className="flex justify-center space-x-2 mt-16">
+            <div className="flex justify-center space-x-2 mt-16" id="faq-pagination">
               {Array.from({ length: totalPages }, (_, i) => (
                 <button
                   key={i}

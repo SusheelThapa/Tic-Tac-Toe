@@ -3,7 +3,7 @@ export interface FAQQuestionAnswer {
   answer: string;
 }
 
-export interface HowToPlay {
+export interface TourStep {
   title: string;
   text: string;
   element: null | string;

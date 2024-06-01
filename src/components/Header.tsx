@@ -5,18 +5,20 @@ import { GoMute } from "react-icons/go";
 import { GoUnmute } from "react-icons/go";
 import { Tour } from "shepherd.js/tour";
 import { Link } from "react-router-dom";
+import { FaPlusCircle } from "react-icons/fa";
 
 interface Props {
   mute: boolean;
   handleMuteButton: (value: boolean) => void;
   how_to_play: Tour;
+  start_tour:Tour
 }
 
-const Header = ({ mute, handleMuteButton, how_to_play }: Props) => {
+const Header = ({ mute, handleMuteButton, how_to_play,start_tour }: Props) => {
   return (
     <div className="flex justify-between items-center mx-4 sm:mx-10 gap-4 sm:gap-10 pt-4">
       <div className="rounded-md">
-        <img src={logo} alt="logo" className="w-24 sm:w-20" />
+        <Link to="/"><img src={logo} alt="logo" className="w-24 sm:w-20" /></Link>
         <span className="font-semibold absolute left-1/2 transform -translate-x-1/2 translate-y-10 invisible group-hover:visible bg-white text-black text-sm tracking-widest rounded-md py-1 px-2 whitespace-nowrap">
           Logo
         </span>
@@ -41,19 +43,31 @@ const Header = ({ mute, handleMuteButton, how_to_play }: Props) => {
             Learn How to Play
           </span>
         </li>
-        <li className="relative group cursor-pointer p-2 px-4" id="about">
+        <li className="relative group cursor-pointer p-2 px-4" id="developer">
           <Link to="/developer">Developer</Link>
           <span className="font-semibold absolute left-1/2 transform -translate-x-1/2 translate-y-10 invisible group-hover:visible bg-white text-black text-sm tracking-widest rounded-md py-1 px-2 whitespace-nowrap">
             Know about developer
           </span>
         </li>
         <li className="relative group cursor-pointer p-2 px-4" id="faq">
-          <Link to='/faq'>FAQ</Link>
+          <Link to="/faq">FAQ</Link>
           <span className="font-semibold absolute left-1/2 transform -translate-x-1/2 translate-y-10 invisible group-hover:visible bg-white text-black text-sm tracking-widest rounded-md py-1 px-2 whitespace-nowrap">
             Frequently Asked Questions
           </span>
         </li>
       </ul>
+      <div
+        id="start-tour"
+        className="relative group text-2xl sm:text-3xl cursor-pointer m-1"
+        onClick={() => start_tour.start()}
+      >
+        <a href="#">
+          <FaPlusCircle />
+          <span className="font-semibold absolute left-1/2 transform -translate-x-1/2 translate-y-10 invisible group-hover:visible bg-white text-black text-sm tracking-widest rounded-md py-1 px-2 whitespace-nowrap">
+            Start Tic Tac Toe Tour
+          </span>
+        </a>
+      </div>
       <div
         id="quine-vote"
         className="relative group text-2xl sm:text-3xl cursor-pointer m-1"

@@ -16,13 +16,14 @@ import Shepherd from "shepherd.js";
 import { PopperPlacement } from "shepherd.js/step";
 import { Tour } from "shepherd.js/tour";
 import "../assets/css/howToPlay.css";
-import { HowToPlay } from "../types/types";
+import { TourStep } from "../types/types";
 
 import { howToPlay } from "../assets/json/how_to_play.json";
+import { startTour } from "../assets/json/startTour.json";
 import { cleanupLastHighlighted, toggleHighlight } from "../utils/highlight";
+
 import { checkForWinner } from "../utils/tictactok";
-
-
+import { displayProgressBar } from "../utils/progressBar";
 
 const Home = () => {
   const [tour_status, setTourStatus] = useState<boolean>(true);
@@ -46,15 +47,12 @@ const Home = () => {
   });
 
   useEffect(() => {
-    // Automatically let the computer play if it is their turn and the game is not over
     if (!isXTurn && !gameOver) {
       const computerIndex = playComputerMove(board);
-      console.log(computerIndex);
       if (computerIndex !== -1) {
         setTimeout(() => handleCellClick(computerIndex, false), 500); // Delay computer move to simulate thinking and allow animations
       }
     }
-    console.log("useEffect called");
   }, [isXTurn, gameOver, board]); // Dependency array to trigger effect on turn change or game status change
 
   const resetGame = () => {
@@ -103,52 +101,35 @@ const Home = () => {
   const how_to_play: Tour = new Shepherd.Tour({
     useModalOverlay: true,
     defaultStepOptions: {
+      exitOnEsc: true,
+      confirmCancelMessage: true,
+      keyboardNavigation: true,
+      classes: "shepherd-theme-light",
       cancelIcon: {
         enabled: true,
       },
-      classes: "shepherd-theme-light",
       scrollTo: { behavior: "smooth", block: "center" },
-      when: {
-        show() {},
-      },
     },
   });
 
-  const tourSteps: HowToPlay[] = howToPlay;
+  const start_tour: Tour = new Shepherd.Tour({
+    useModalOverlay: true,
+    defaultStepOptions: {
+      exitOnEsc: true,
+      confirmCancelMessage: true,
+      keyboardNavigation: true,
+      classes: "shepherd-theme-light",
+      cancelIcon: {
+        enabled: true,
+      },
+      scrollTo: { behavior: "smooth", block: "center" },
+    },
+  });
 
-  const displayProgressBar = () => {
-    const currentStepElement = how_to_play.currentStep
-      ?.el as HTMLElement | null;
-    if (currentStepElement) {
-      const footer = currentStepElement.querySelector(
-        ".shepherd-footer"
-      ) as HTMLElement | null;
-      if (footer) {
-        const progressContainer = document.createElement("div");
-        const progressBar = document.createElement("span");
+  const howToPlaySteps: TourStep[] = howToPlay;
+  const startTourSteps: TourStep[] = startTour;
 
-        progressContainer.className = "shepherd-progress-bar";
-        const progressPercentage =
-          ((how_to_play.steps.indexOf(how_to_play.currentStep!) + 1) /
-            how_to_play.steps.length) *
-            100 +
-          "%";
-        progressBar.style.width = progressPercentage;
-
-        progressContainer.appendChild(progressBar);
-
-        const shepherdButton = currentStepElement.querySelector(
-          ".shepherd-button"
-        ) as HTMLElement | null;
-        if (shepherdButton) {
-          footer.insertBefore(progressContainer, shepherdButton);
-          console.log(footer);
-        }
-      }
-    }
-  };
-
-  tourSteps.forEach((step) => {
+  howToPlaySteps.forEach((step, index) => {
     how_to_play.addStep({
       title: step.title,
       text: step.text,
@@ -160,63 +141,120 @@ const Home = () => {
         ? {
             show() {
               toggleHighlight(step.element, "add");
-              displayProgressBar();
+              displayProgressBar(how_to_play);
             },
             hide: () => {
               toggleHighlight(step.element, "remove");
-              displayProgressBar();
+              displayProgressBar(how_to_play);
             },
           }
         : {
             show() {
-              displayProgressBar();
+              displayProgressBar(how_to_play);
             },
           },
-      buttons:
-        step.title === "Welcome"
-          ? [
-              {
-                action() {
-                  return this.next();
-                },
-                text: "Next",
-              },
-            ]
-          : step.title === "Over to you"
-          ? [
-              {
-                action() {
-                  return this.back();
-                },
-                text: "Back",
-              },
-
-              {
-                action() {
-                  return this.next();
-                },
-                text: "End Tour",
-              },
-            ]
-          : [
-              {
-                action() {
-                  return this.back();
-                },
-                text: "Back",
-              },
-              {
-                action() {
-                  return this.next();
-                },
-                text: "Next",
-              },
-            ],
+      buttons: [
+        ...(index !== 0 ? [{ text: "Back", action: start_tour.back }] : []),
+        {
+          text: index === startTourSteps.length - 1 ? "End Tour" : "Next",
+          action: start_tour.next,
+        },
+      ],
     });
+  });
+
+  startTourSteps.forEach((step, index) => {
+    let stepConfig = {
+      title: step.title,
+      text: step.text,
+      attachTo: {
+        element: step.element,
+        on: step.position as PopperPlacement,
+      },
+      when: step.highlight
+        ? {
+            show() {
+              toggleHighlight(step.element, "add");
+              displayProgressBar(start_tour);
+            },
+            hide: () => {
+              toggleHighlight(step.element, "remove");
+              displayProgressBar(start_tour);
+            },
+          }
+        : {
+            show() {
+              displayProgressBar(start_tour);
+            },
+          },
+      buttons: [
+        ...(index !== 0 ? [{ text: "Back", action: start_tour.back }] : []),
+        {
+          text: index === startTourSteps.length - 1 ? "End Tour" : "Next",
+          action: start_tour.next,
+        },
+      ],
+    };
+
+    switch (step.title) {
+      case "FAQ Section":
+        stepConfig = {
+          ...stepConfig,
+          beforeShowPromise: function () {
+            return new Promise<void>(function (resolve) {
+              const link = document.querySelector(
+                "#faq > a"
+              ) as HTMLAnchorElement;
+              if (link) {
+                link.click();
+              }
+              resolve();
+            });
+          },
+        };
+        break;
+        
+      case "Developer Section":
+        stepConfig = {
+          ...stepConfig,
+          beforeShowPromise: function () {
+            return new Promise<void>(function (resolve) {
+              const link = document.querySelector(
+                "#developer>a"
+              ) as HTMLAnchorElement;
+              if (link) {
+                link.click();
+              }
+              resolve();
+            });
+          },
+        };
+        break;
+
+      case "Over to you":
+        stepConfig = {
+          ...stepConfig,
+          beforeShowPromise: function () {
+            return new Promise<void>(function (resolve) {
+              const link = document.querySelector(
+                "#home > a"
+              ) as HTMLAnchorElement;
+              if (link) {
+                link.click();
+              }
+              resolve();
+            });
+          },
+        };
+    }
+
+    start_tour.addStep(stepConfig);
   });
 
   how_to_play.on("complete", cleanupLastHighlighted);
   how_to_play.on("cancel", cleanupLastHighlighted);
+  start_tour.on("complete", cleanupLastHighlighted);
+  start_tour.on("cancel", cleanupLastHighlighted);
 
   const status = localStorage.getItem("shepherd-tour") != "yes";
   return (
@@ -227,6 +265,7 @@ const Home = () => {
           mute={mute}
           handleMuteButton={setMute}
           how_to_play={how_to_play}
+          start_tour={start_tour}
         />
         <Board
           board={board}

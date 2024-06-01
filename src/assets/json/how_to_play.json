@@ -1,69 +1,6 @@
 {
   "howToPlay": [
     {
-      "title": "Welcome",
-      "text": "I'm Agent T., and I will guide you through the features of our tic-tac-toe game.",
-      "element": null,
-      "position": "bottom",
-      "highlight": false
-    },
-    {
-      "title": "Game Header",
-      "text": "Here in the game's header section, you can find the game title and access various controls.",
-      "element": "#header",
-      "position": "bottom",
-      "highlight": true
-    },
-    {
-      "title": "Home",
-      "text": "This is the Home section. Click here to return to the main page of the game.",
-      "element": "#home",
-      "position": "bottom",
-      "highlight": true
-    },
-    {
-      "title": "How to Play",
-      "text": "Click here to learn how to play the game. This section provides detailed instructions and tips.",
-      "element": "#how-to-play",
-      "position": "bottom",
-      "highlight": true
-    },
-    {
-      "title": "Developer",
-      "text": "This section contains information about the developer behind it.",
-      "element": "#about",
-      "position": "bottom",
-      "highlight": true
-    },
-    {
-      "title": "FAQ",
-      "text": "Here you can find answers to frequently asked questions about the game.",
-      "element": "#faq",
-      "position": "bottom",
-      "highlight": true
-    },
-    {
-      "title": "Vote on Quine",
-      "text": "If you like our project, you can vote for us here. Just click the upvote icon!",
-      "element": "#quine-vote",
-      "position": "bottom",
-      "highlight": false
-    },
-    {
-      "title": "Github Repository",
-      "text": "Interested in how this game was built or want to contribute? <br/> Click on the GitHub icon to visit our repository where you can find the source code and project details.",
-      "element": "#github-repository",
-      "position": "bottom",
-      "highlight": false
-    },
-    {
-      "title": "Sound Toggle",
-      "text": "This button lets you toggle the game's sound. <br/> Click here to mute or unmute the game sounds.",
-      "element": "#mute-unmute-button",
-      "position": "bottom",
-      "highlight": false
-    },
-    {
       "title": "Game Board",
       "text": "This is the main tic-tac-toe board where the game is played. <br/> Click on any empty cell to make a move.",
       "element": "#tic-tac-toe-board",
@@ -110,13 +47,6 @@
       "text": "This shows how many games the computer has won. <br/> It's updated each time the computer scores a victory.",
       "element": "#computer-won-score",
       "position": "bottom",
-      "highlight": false
-    },
-    {
-      "title": "Over to you",
-      "text": "That's all for now! <br/> I hope you enjoy playing the game. <br/> Signing off, Agent T.",
-      "element": null,
-      "position": "top",
       "highlight": false
     }
   ]

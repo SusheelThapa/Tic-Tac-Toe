@@ -1,3 +1,6 @@
+// @ts-ignore
+import useSound from "use-sound";
+
 import { motion } from "framer-motion";
 
 interface Props {
