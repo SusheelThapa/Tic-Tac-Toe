@@ -131,44 +131,74 @@ const App = () => {
 
   const tourSteps = [
     {
-      text: "This is the header section",
+      text: "Welcome to our game! <br/> I'm Agent T., and I will guide you through the features of our tic-tac-toe game.",
+      element: null,
+      position: "bottom",
+      highlight: false,
+    },
+    {
+      text: "Here in the game's header section, you can find the game title and access various controls.",
       element: "#header",
       position: "bottom",
       highlight: true,
     },
     {
-      text: "This is the tic-tac-toe board section",
+      text: "This button lets you toggle the game's sound. <br/> Click here to mute or unmute the game sounds.",
+      element: "#mute-unmute-button",
+      position: "bottom",
+      highlight: false,
+    },
+    {
+      text: "This is the main tic-tac-toe board where the game is played. <br/> Click on any empty cell to make a move.",
       element: "#tic-tac-toe-board",
       position: "left",
       highlight: true,
     },
     {
-      text: "This is the game score section",
+      text: "This is the game-over screen. <br/> It appears when the game has ended, either in a win, loss, or tie. Here you'll see who won the game and have the option to restart the game.",
+      element: "#game-over-screen",
+      position: "top", // Position can be adjusted based on your actual layout
+      highlight: true,
+    },
+    {
+      text: "When you're ready to play again, just click this restart button. <br/> It will reset the board and start a new game.",
+      element: "#restart-button",
+      position: "bottom",
+      highlight: false,
+    },
+    {
+      text: "Here you can view the current game score. <br/> This area updates with each move to show who's leading.",
       element: "#game-score",
       position: "left",
       highlight: true,
     },
     {
-      text: "This is the player won score section",
+      text: "This section displays the total number of games you've won. <br/> Each victory in the game increases this count.",
       element: "#player-won-score",
       position: "bottom",
-      highlight: true,
+      highlight: false,
     },
     {
-      text: "This is the game tie score section",
+      text: "This score counts the number of games that have ended in a tie. <br/> It updates whenever a game ends without a winner.",
       element: "#game-tie-score",
       position: "bottom",
-      highlight: true,
+      highlight: false,
     },
     {
-      text: "This is the computer won score section",
+      text: "This shows how many games the computer has won. <br/> It's updated each time the computer scores a victory.",
       element: "#computer-won-score",
       position: "bottom",
-      highlight: true,
+      highlight: false,
+    },
+    {
+      text: "That's all for now! <br/> I hope you enjoy playing the game. <br/> Signing off, Agent T.",
+      element: null, // Or another element that could signify the end of the tour
+      position: "top",
+      highlight: false,
     },
   ];
 
-  function toggleHighlight(elementId: string, action:string) {
+  function toggleHighlight(elementId: string, action: string) {
     const element = document.querySelector(elementId);
     if (element) {
       element.classList[action]("highlighted");
@@ -179,7 +209,7 @@ const App = () => {
     if (tourSteps.length > 0) {
       const lastStep = tourSteps[tourSteps.length - 1];
       if (lastStep.highlight) {
-        toggleHighlight(lastStep.element, 'remove');
+        toggleHighlight(lastStep.element, "remove");
       }
     }
   }
@@ -208,8 +238,8 @@ const App = () => {
     });
   });
 
-  how_to_play.on('complete', cleanupLastHighlighted);
-how_to_play.on('cancel', cleanupLastHighlighted);
+  how_to_play.on("complete", cleanupLastHighlighted);
+  how_to_play.on("cancel", cleanupLastHighlighted);
 
   return (
     <>
@@ -235,6 +265,7 @@ how_to_play.on('cancel', cleanupLastHighlighted);
             <div
               className="text-white text-xl p-4 rounded-lg flex justify-center items-center flex-col gap-5"
               style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
+              id="game-over-screen"
             >
               {winner === "Tie" ? (
                 <>
@@ -251,6 +282,7 @@ how_to_play.on('cancel', cleanupLastHighlighted);
               )}
             </div>
             <button
+              id="restart-button"
               onClick={resetGame}
               className="mt-4 p-2 bg-white text-black rounded-md flex items-center px-5 py-2 text-xl font-semibold"
             >
