@@ -1,0 +1,29 @@
+.shepherd-content {
+    background-color: whitesmoke !important;
+    border-radius: 1rem !important;
+    padding: 10px !important;
+}
+
+.shepherd-arrow {
+    color: whitesmoke !important;
+}
+
+.shepherd-content>.shepherd-header {
+    display: none
+}
+
+.shepherd-content>.shepherd-footer>.shepherd-button {
+    background-color: black !important;
+    color: white !important;
+    border-radius: .8rem !important;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* CSS for highlighting the target element */
+.highlighted {
+    transition: box-shadow 0.3s ease-in-out;
+    border-radius: 10px;
+    border: groove;
+
+}

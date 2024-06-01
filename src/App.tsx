@@ -16,6 +16,10 @@ import gameOverTieSound from "./assets/audio/game-over-tie.mp3";
 
 import { playComputerMove } from "./utils/playComputerMove";
 import ShepHerdTour from "./components/Shepherd/ShepHerdTour";
+import Shepherd from "shepherd.js";
+import { Tour } from "shepherd.js/tour";
+
+import "./assets/css/howToPlay.css";
 
 export const checkForWinner = (squares: string[]) => {
   const lines = [
@@ -38,7 +42,7 @@ export const checkForWinner = (squares: string[]) => {
 };
 
 const App = () => {
-  const [tour_status, setTourStatus] = useState<boolean>(true);
+  const [tour_status, setTourStatus] = useState<boolean>(false);
 
   const [mute, setMute] = useState<boolean>(false);
   const [board, setBoard] = useState(Array(9).fill(""));
@@ -114,11 +118,108 @@ const App = () => {
     }
   };
 
+  const how_to_play: Tour = new Shepherd.Tour({
+    useModalOverlay: true,
+    defaultStepOptions: {
+      cancelIcon: {
+        enabled: true,
+      },
+      classes: "shepherd-theme-light",
+      scrollTo: { behavior: "smooth", block: "center" },
+    },
+  });
+
+  const tourSteps = [
+    {
+      text: "This is the header section",
+      element: "#header",
+      position: "bottom",
+      highlight: true,
+    },
+    {
+      text: "This is the tic-tac-toe board section",
+      element: "#tic-tac-toe-board",
+      position: "left",
+      highlight: true,
+    },
+    {
+      text: "This is the game score section",
+      element: "#game-score",
+      position: "left",
+      highlight: true,
+    },
+    {
+      text: "This is the player won score section",
+      element: "#player-won-score",
+      position: "bottom",
+      highlight: true,
+    },
+    {
+      text: "This is the game tie score section",
+      element: "#game-tie-score",
+      position: "bottom",
+      highlight: true,
+    },
+    {
+      text: "This is the computer won score section",
+      element: "#computer-won-score",
+      position: "bottom",
+      highlight: true,
+    },
+  ];
+
+  function toggleHighlight(elementId: string, action:string) {
+    const element = document.querySelector(elementId);
+    if (element) {
+      element.classList[action]("highlighted");
+    }
+  }
+
+  function cleanupLastHighlighted() {
+    if (tourSteps.length > 0) {
+      const lastStep = tourSteps[tourSteps.length - 1];
+      if (lastStep.highlight) {
+        toggleHighlight(lastStep.element, 'remove');
+      }
+    }
+  }
+
+  tourSteps.forEach((step) => {
+    how_to_play.addStep({
+      text: step.text,
+      attachTo: {
+        element: step.element,
+        on: step.position,
+      },
+      when: step.highlight
+        ? {
+            show: () => toggleHighlight(step.element, "add"),
+            hide: () => toggleHighlight(step.element, "remove"),
+          }
+        : {},
+      buttons: [
+        {
+          action() {
+            return this.next();
+          },
+          text: "Next",
+        },
+      ],
+    });
+  });
+
+  how_to_play.on('complete', cleanupLastHighlighted);
+how_to_play.on('cancel', cleanupLastHighlighted);
+
   return (
     <>
       {tour_status && <ShepHerdTour setTourStatus={setTourStatus} />}
       <div className={tour_status ? "z-0" : ""}>
-        <Header mute={mute} handleMuteButton={setMute} />
+        <Header
+          mute={mute}
+          handleMuteButton={setMute}
+          how_to_play={how_to_play}
+        />
         <Board
           board={board}
           handleCellClick={handleCellClick}
