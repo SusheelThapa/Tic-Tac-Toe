@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import Shepherd from "shepherd.js";
 
+// @ts-ignore
 import useSound, { StopFunction } from "use-sound";
 
 import TypingText from "./TypingText";

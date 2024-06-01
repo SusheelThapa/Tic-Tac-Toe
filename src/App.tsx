@@ -1,24 +1,20 @@
 import { useState, useEffect } from "react";
-
 import { FaTrophy, FaRedo } from "react-icons/fa"; // Import icons
 import { SiAlienware } from "react-icons/si";
-
+// @ts-ignore
 import useSound from "use-sound";
-
 import Board from "./components/Board";
 import Header from "./components/Header";
 import Score from "./components/Score";
-
 import noteHigh from "./assets/audio/note-high.mp3";
 import noteLow from "./assets/audio/note-low.mp3";
 import gameOverSound from "./assets/audio/game-over.mp3";
 import gameOverTieSound from "./assets/audio/game-over-tie.mp3";
-
 import { playComputerMove } from "./utils/playComputerMove";
 import ShepHerdTour from "./components/Shepherd/ShepHerdTour";
 import Shepherd from "shepherd.js";
+import { PopperPlacement } from "shepherd.js/step";
 import { Tour } from "shepherd.js/tour";
-
 import "./assets/css/howToPlay.css";
 
 export const checkForWinner = (squares: string[]) => {
@@ -42,8 +38,7 @@ export const checkForWinner = (squares: string[]) => {
 };
 
 const App = () => {
-  const [tour_status, setTourStatus] = useState<boolean>(false);
-
+  const [tour_status, setTourStatus] = useState<boolean>(true);
   const [mute, setMute] = useState<boolean>(false);
   const [board, setBoard] = useState(Array(9).fill(""));
   const [isXTurn, setIsXTurn] = useState(true);
@@ -72,7 +67,7 @@ const App = () => {
         setTimeout(() => handleCellClick(computerIndex, false), 500); // Delay computer move to simulate thinking and allow animations
       }
     }
-    console.log("useEffectg called");
+    console.log("useEffect called");
   }, [isXTurn, gameOver, board]); // Dependency array to trigger effect on turn change or game status change
 
   const resetGame = () => {
@@ -132,7 +127,13 @@ const App = () => {
     },
   });
 
-  const tourSteps = [
+  const tourSteps: {
+    title: string;
+    text: string;
+    element: null | string;
+    position: string;
+    highlight: boolean;
+  }[] = [
     {
       title: "Welcome",
       text: "I'm Agent T., and I will guide you through the features of our tic-tac-toe game.",
@@ -226,10 +227,12 @@ const App = () => {
     },
   ];
 
-  function toggleHighlight(elementId: string, action: string) {
-    const element = document.querySelector(elementId);
-    if (element) {
-      element.classList[action]("highlighted");
+  function toggleHighlight(elementId: string | null, action: string) {
+    if (elementId) {
+      const element = document.querySelector(elementId);
+      if (element) {
+        element.classList[action as "add" | "remove"]("highlighted");
+      }
     }
   }
 
@@ -243,26 +246,35 @@ const App = () => {
   }
 
   const displayProgressBar = () => {
-    const currentStepElement = how_to_play.currentStep.el;
-    const footer = currentStepElement.querySelector(".shepherd-footer");
+    const currentStepElement = how_to_play.currentStep
+      ?.el as HTMLElement | null;
+    if (currentStepElement) {
+      const footer = currentStepElement.querySelector(
+        ".shepherd-footer"
+      ) as HTMLElement | null;
+      if (footer) {
+        const progressContainer = document.createElement("div");
+        const progressBar = document.createElement("span");
 
-    const progressContainer = document.createElement("div");
-    const progressBar = document.createElement("span");
+        progressContainer.className = "shepherd-progress-bar";
+        const progressPercentage =
+          ((how_to_play.steps.indexOf(how_to_play.currentStep!) + 1) /
+            how_to_play.steps.length) *
+            100 +
+          "%";
+        progressBar.style.width = progressPercentage;
 
-    progressContainer.className = "shepherd-progress-bar";
-    const progressPercentage =
-      ((how_to_play.steps.indexOf(how_to_play.currentStep) + 1) /
-        how_to_play.steps.length) *
-        100 +
-      "%";
-    progressBar.style.width = progressPercentage;
+        progressContainer.appendChild(progressBar);
 
-    progressContainer.appendChild(progressBar);
-    footer.insertBefore(
-      progressContainer,
-      currentStepElement.querySelector(".shepherd-button")
-    );
-    console.log(footer);
+        const shepherdButton = currentStepElement.querySelector(
+          ".shepherd-button"
+        ) as HTMLElement | null;
+        if (shepherdButton) {
+          footer.insertBefore(progressContainer, shepherdButton);
+          console.log(footer);
+        }
+      }
+    }
   };
 
   tourSteps.forEach((step, index) => {
@@ -271,7 +283,7 @@ const App = () => {
       text: step.text,
       attachTo: {
         element: step.element,
-        on: step.position,
+        on: step.position as PopperPlacement,
       },
       when: step.highlight
         ? {
@@ -361,7 +373,7 @@ const App = () => {
                 <>
                   <FaTrophy className=" text-[10rem]" />
                   <p className="text-3xl">
-                    {winner == "X" ? "You have won" : "Agent T. have won"}
+                    {winner === "X" ? "You have won" : "Agent T. has won"}
                   </p>
                 </>
               )}
