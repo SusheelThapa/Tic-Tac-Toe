@@ -143,6 +143,18 @@ const App = () => {
       highlight: true,
     },
     {
+      text: 'If you like our project, you can vote for us here. Just click the upvote icon!',
+      element: "#quine-vote",
+      position: "bottom",
+      highlight: false,
+    },
+    {
+      text: "Interested in how this game was built or want to contribute? <br/> Click on the GitHub icon to visit our repository where you can find the source code and project details.",
+      element: "#github-repository",
+      position: "bottom",
+      highlight: false,
+    },
+    {
       text: "This button lets you toggle the game's sound. <br/> Click here to mute or unmute the game sounds.",
       element: "#mute-unmute-button",
       position: "bottom",

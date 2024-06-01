@@ -1,3 +1,5 @@
+import { FaGithub } from "react-icons/fa6";
+import { BiSolidUpvote } from "react-icons/bi";
 import logo from "../assets/images/logo.png";
 import { GoMute } from "react-icons/go";
 import { GoUnmute } from "react-icons/go";
@@ -11,7 +13,7 @@ interface Props {
 
 const Header = ({ mute, handleMuteButton, how_to_play }: Props) => {
   return (
-    <div className="flex justify-between items-center mx-10">
+    <div className="flex justify-between items-center mx-10 gap-10 pt-4">
       <div className="rounded-md">
         <img src={logo} alt="logo" className="w-20" />
       </div>
@@ -26,9 +28,20 @@ const Header = ({ mute, handleMuteButton, how_to_play }: Props) => {
           How to play?
         </li>
       </ul>
+      <div id="quine-vote" className="text-3xl cursor-pointer m-1">
+        <a href="#">
+          <BiSolidUpvote />
+        </a>
+      </div>
+      <div id="github-repository" className="text-3xl cursor-pointer m-1">
+        <a href="https://github.com/SusheelThapa/Tic-Tac-Toe">
+          <FaGithub />
+        </a>
+      </div>
+
       <div
         id="mute-unmute-button"
-        className="text-5xl cursor-pointer"
+        className="text-3xl cursor-pointer m-1"
         onClick={() => handleMuteButton(!mute)}
       >
         {mute ? <GoMute /> : <GoUnmute />}
