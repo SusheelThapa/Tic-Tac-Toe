@@ -1,7 +1,7 @@
 .shepherd-theme-light>.shepherd-content {
     background-color: whitesmoke !important;
     border-radius: 1rem !important;
-    padding: 10px !important;
+    padding: 16px !important;
     font-size: 1rem !important;
     font-weight: 500 !important;
     letter-spacing: 1px !important;
@@ -10,6 +10,33 @@
 .shepherd-theme-light>.shepherd-arrow {
     color: whitesmoke !important;
 }
+
+.shepherd-theme-light>.shepherd-content>.shepherd-header {
+    background-color: rgb(33, 33, 33) !important;
+
+    padding: 8px !important;
+    border-radius: 10px;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.shepherd-theme-light>.shepherd-content>.shepherd-header>.shepherd-title {
+    color: white !important;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.shepherd-cancel-icon {
+    color: rgb(209, 209, 209) !important;
+    font-size: 3rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
 
 .shepherd-theme-light>.shepherd-content>.shepherd-footer>.shepherd-button {
     background-color: black !important;
@@ -41,12 +68,12 @@
     width: 100%;
     max-width: 180px;
     padding: 4px;
-    background: #e6e6e6;
+    background: black;
 }
 
 .shepherd-progress-bar span {
     display: block;
-    background: black;
+    background: white;
     height: 100%;
     border-radius: 9px;
 }

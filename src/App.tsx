@@ -134,78 +134,91 @@ const App = () => {
 
   const tourSteps = [
     {
-      text: "Welcome to our game! <br/> I'm Agent T., and I will guide you through the features of our tic-tac-toe game.",
+      title: "Welcome",
+      text: "I'm Agent T., and I will guide you through the features of our tic-tac-toe game.",
       element: null,
       position: "bottom",
       highlight: false,
     },
     {
+      title: "Game Header",
       text: "Here in the game's header section, you can find the game title and access various controls.",
       element: "#header",
       position: "bottom",
       highlight: true,
     },
     {
+      title: "Vote on Quine",
       text: "If you like our project, you can vote for us here. Just click the upvote icon!",
       element: "#quine-vote",
       position: "bottom",
       highlight: false,
     },
     {
+      title: "Github Repository",
       text: "Interested in how this game was built or want to contribute? <br/> Click on the GitHub icon to visit our repository where you can find the source code and project details.",
       element: "#github-repository",
       position: "bottom",
       highlight: false,
     },
     {
+      title: "Sound Toggle",
       text: "This button lets you toggle the game's sound. <br/> Click here to mute or unmute the game sounds.",
       element: "#mute-unmute-button",
       position: "bottom",
       highlight: false,
     },
     {
+      title: "Game Board",
       text: "This is the main tic-tac-toe board where the game is played. <br/> Click on any empty cell to make a move.",
       element: "#tic-tac-toe-board",
       position: "left",
       highlight: true,
     },
     {
+      title: "Game Over Screen",
       text: "This is the game-over screen. <br/> It appears when the game has ended, either in a win, loss, or tie. Here you'll see who won the game and have the option to restart the game.",
       element: "#game-over-screen",
       position: "top", // Position can be adjusted based on your actual layout
       highlight: true,
     },
     {
+      title: "Restart Button",
       text: "When you're ready to play again, just click this restart button. <br/> It will reset the board and start a new game.",
       element: "#restart-button",
       position: "bottom",
       highlight: false,
     },
     {
+      title: "Game Score",
       text: "Here you can view the current game score. <br/> This area updates with each move to show who's leading.",
       element: "#game-score",
       position: "left",
       highlight: true,
     },
     {
+      title: "Player Wins",
       text: "This section displays the total number of games you've won. <br/> Each victory in the game increases this count.",
       element: "#player-won-score",
       position: "bottom",
       highlight: false,
     },
     {
+      title: "Game Ties",
       text: "This score counts the number of games that have ended in a tie. <br/> It updates whenever a game ends without a winner.",
       element: "#game-tie-score",
       position: "bottom",
       highlight: false,
     },
     {
+      title: "Agent T. Wins",
       text: "This shows how many games the computer has won. <br/> It's updated each time the computer scores a victory.",
       element: "#computer-won-score",
       position: "bottom",
       highlight: false,
     },
     {
+      title: "Over to you",
       text: "That's all for now! <br/> I hope you enjoy playing the game. <br/> Signing off, Agent T.",
       element: null, // Or another element that could signify the end of the tour
       position: "top",
@@ -230,8 +243,6 @@ const App = () => {
   }
 
   const displayProgressBar = () => {
-    console.log("display called");
-
     const currentStepElement = how_to_play.currentStep.el;
     const footer = currentStepElement.querySelector(".shepherd-footer");
 
@@ -256,6 +267,7 @@ const App = () => {
 
   tourSteps.forEach((step, index) => {
     how_to_play.addStep({
+      title: step.title,
       text: step.text,
       attachTo: {
         element: step.element,
