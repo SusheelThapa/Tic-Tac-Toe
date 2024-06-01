@@ -16,7 +16,7 @@ const Score = ({ playerWins, computerWins, ties }: Props) => {
         <div className="text-5xl">{ties}</div>
       </div>
       <div className="text-center">
-        <div>COMPUTER(O)</div>
+        <div>Agent T.(O)</div>
         <div className="text-5xl">{computerWins}</div>
       </div>
     </div>

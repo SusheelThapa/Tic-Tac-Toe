@@ -17,12 +17,16 @@ interface Props {
 }
 
 const game_intro = [
-  "Welcome to the Ultimate Tic Tac Toe!",
-  "Say goodbye to paper—play digitally!",
-  "Simple to learn, a challenge to master. Are you ready?",
-  "Think ahead. Plan your moves. Outsmart your opponent.",
-  "Win or lose, every game is a chance to grow stronger. Ready for another?",
-  "Enjoy the game! Make every move count!",
+  "Hello Chief! I'm Agent Tacton, your advanced tactical guide. Are you ready to revolutionize the way you play Tic Tac Toe?",
+  "Let's take a moment to consider the environment. Each year, millions of trees are cut down, contributing to habitat loss, climate change, and air pollution. Traditionally, even simple games like Tic Tac Toe have contributed to this through the use of paper.",
+  "That's why we've brought you this digital version. By playing Tic Tac Toe here, you’re not just saving paper—you’re helping to preserve our planet’s precious resources.",
+  "In this digital arena, every strategic move you make is eco-friendly. You'll battle against me, Agent Tacton, in a high-tech challenge that tests your wits while protecting nature.",
+  "As we play, remember that each decision should be made with care and foresight. Think of this game as a metaphor for the choices we face in protecting our environment.",
+  "Here’s a tip: Predicting my moves is akin to anticipating the effects of our actions on the environment. Plan wisely and think sustainability.",
+  "So, are you ready to challenge your mind and make a difference? Every game you play here contributes to less waste and less environmental strain.",
+  "I’m excited to see how you'll tackle these challenges. Are you prepared to outsmart me in a game that benefits our world? Let the match begin!",
+  "Remember, every game played digitally is a leaf that stays on a tree. Let’s play smart, play green, and try to win this game!",
+  "Ready to leave a positive impact without leaving a carbon footprint? Game on, Chief! Let’s make every move count.",
 ];
 
 const setupTour = (
@@ -125,8 +129,13 @@ const ShepHerdTour = ({ setTourStatus }: Props) => {
         id="shepherd-tour"
         className="text-white bg-transparent w-full h-full absolute top-0 left-0 flex justify-center items-center z-10 backdrop-blur-lg"
       >
-        <div className="flex items-center justify-between space-x-4 mr-24 ">
-          <img src={StickMan} alt="Stick Man" className="w-5/12" />
+        <div className="flex items-center justify-between space-x-4 ">
+          <div className="flex items-start justify-start flex-col">
+            <img src={StickMan} alt="Stick Man" className="w-4/12" />
+            <p className="text-center w-4/12 mt-6 text-2xl font-extrabold tracking-wider ml-4">
+              Agent Tacton
+            </p>
+          </div>
         </div>
       </div>
     </>

@@ -143,7 +143,9 @@ const App = () => {
               ) : (
                 <>
                   <FaTrophy className=" text-[10rem]" />
-                  <p className="text-3xl">{`${winner} Wins!`}</p>
+                  <p className="text-3xl">
+                    {winner == "X" ? "You have won" : "Agent T. have won"}
+                  </p>
                 </>
               )}
             </div>
