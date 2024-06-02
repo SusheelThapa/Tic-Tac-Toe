@@ -8,6 +8,27 @@
       "highlight": true
     },
     {
+      "title": "Your Turn",
+      "text": "Click on a cell to make your move.",
+      "element": "#tic-tac-toe-board > div:nth-child(1)",
+      "position": "left",
+      "highlight": false
+    },
+    {
+      "title": "Agent T's Move",
+      "text": "Here's my move...",
+      "element": "#tic-tac-toe-board > div:nth-child(5)",
+      "position": "right",
+      "highlight": false
+    },
+    {
+      "title": "Complete the Game",
+      "text": "Keep making your moves, and I'll make mine.",
+      "element": "#tic-tac-toe-board",
+      "position": "right",
+      "highlight": false
+    },
+    {
       "title": "Game Over Screen",
       "text": "This is the game-over screen. <br/> It appears when the game has ended, either in a win, loss, or tie. Here you'll see who won the game and have the option to restart the game.",
       "element": "#game-over-screen",

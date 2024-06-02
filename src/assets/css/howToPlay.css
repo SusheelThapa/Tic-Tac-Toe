@@ -50,7 +50,8 @@
 .highlighted {
     transition: box-shadow 0.3s ease-in-out;
     border-radius: 10px;
-    border: groove;
+    border: solid;
+    padding: 2px;
 
 }
 

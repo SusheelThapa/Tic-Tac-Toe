@@ -19,8 +19,10 @@ export const createTour = (
 ): Tour => {
   const tour = new Shepherd.Tour({
     useModalOverlay: tourOptions.useModalOverlay,
+    exitOnEsc: true,
+    keyboardNavigation: true,
     defaultStepOptions: {
-      classes: "shepherd-theme-light",
+      classes: "shepherd-theme-light shadow-md bg-purple-dark",
       cancelIcon: {
         enabled: true,
       },
