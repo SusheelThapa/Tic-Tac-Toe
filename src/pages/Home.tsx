@@ -32,7 +32,11 @@ const Home = () => {
     handleCellClick,
   } = useTicTacToe(mute);
 
-  const how_to_play = createTour(howToPlay, { useModalOverlay: true });
+  const how_to_play = createTour(howToPlay, {
+    useModalOverlay: true,
+    multiPageTour: true,
+    multiPageTourCases: ["Game Score"],
+  });
   const start_tour = createTour(startTour, {
     useModalOverlay: true,
     multiPageTour: true,

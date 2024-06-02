@@ -2,21 +2,28 @@
   "startTour": [
     {
       "title": "Welcome",
-      "text": "I'm Agent T., and I will guide you through the features of our tic-tac-toe game.",
+      "text": "I'm Agent T. and I will guide you through the features of our tic-tac-toe game.",
       "element": null,
       "position": "bottom",
       "highlight": false
     },
     {
       "title": "Start your Tour",
-      "text": "Click here to start you Tic Tac Toe Tour",
+      "text": "Click here to start your Tic Tac Toe Tour",
       "element": "#start-tour",
       "position": "bottom",
       "highlight": false
     },
     {
+      "title": "Share Tic Tac Toe",
+      "text": "Sharing is Caring... <br/>Let the world know about Tic Tac Toe...",
+      "element": "#share",
+      "position": "bottom",
+      "highlight": false
+    },
+    {
       "title": "Vote on Quine",
-      "text": "If you like our project, you can vote for us here. Just click the upvote icon!",
+      "text": "If you like our project, you can vote for us here. <br/>Just click the upvote icon!",
       "element": "#quine-vote",
       "position": "bottom",
       "highlight": false
@@ -36,22 +43,15 @@
       "highlight": false
     },
     {
-      "title": "Game Header",
-      "text": "Here in the game's header section, you can find the game title and access various controls.",
-      "element": "#header",
-      "position": "bottom",
-      "highlight": true
-    },
-    {
       "title": "Home",
-      "text": "This is the Home section. Click here to return to the main page of the game.",
+      "text": "This is the Home section. <br/>Click here to return to the main page of the game.",
       "element": "#home",
       "position": "bottom",
       "highlight": true
     },
     {
       "title": "How to Play",
-      "text": "Click here to learn how to play the game. This section provides detailed instructions and tips.",
+      "text": "Click here to learn how to play the game.<br/> This section provides detailed instructions and tips.",
       "element": "#how-to-play",
       "position": "bottom",
       "highlight": true
@@ -68,7 +68,7 @@
       "text": "Here you can find answers to frequently asked questions about the game.",
       "element": "#faq",
       "position": "bottom",
-      "highlight": false
+      "highlight": true
     },
     {
       "title": "Developer Section",
@@ -76,7 +76,7 @@
       "element": "#developer-section",
       "position": "top",
       "highlight": true,
-      "selector": "#developer"
+      "selector": "#developer > a"
     },
     {
       "title": "Developer Image",
@@ -98,7 +98,7 @@
       "element": "#faq-section",
       "position": "left",
       "highlight": false,
-      "selector": "#faq"
+      "selector": "#faq > a"
     },
     {
       "title": "FAQ Pagination",
@@ -113,7 +113,7 @@
       "element": null,
       "position": "top",
       "highlight": false,
-      "selector": "#home"
+      "selector": "#home > a"
     }
   ]
 }

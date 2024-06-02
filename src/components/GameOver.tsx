@@ -7,10 +7,9 @@ interface Props {
 }
 const GameOver = ({ winner, resetGame }: Props) => {
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
+    <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-none backdrop-blur-xl">
       <div
         className="text-white text-xl p-4 rounded-lg flex justify-center items-center flex-col gap-5"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
         id="game-over-screen"
       >
         {winner === "Tie" ? (

@@ -49,9 +49,6 @@ export const createTour = (
           if (!step.highlight && step.input) {
             displayInputField(tour, step.input_placeholder);
           }
-          if (step.highlight) {
-            console.log(step.input);
-          }
         },
         hide() {
           if (step.highlight) {
@@ -94,13 +91,12 @@ export const createTour = (
         ...stepConfig,
         beforeShowPromise: function () {
           return new Promise<void>((resolve) => {
-            const link = document.querySelector(
-              `${step.selector} > a`
-            ) as HTMLAnchorElement;
-            console.log(link);
-            if (link) {
-              console.log("Link is clicked");
-              link.click();
+            const element = document.querySelector(`${step.selector}`) as
+              | HTMLAnchorElement
+              | HTMLButtonElement;
+              console.log(element)
+            if (element) {
+              element.click();
             }
             resolve();
           });

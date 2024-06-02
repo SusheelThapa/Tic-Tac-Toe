@@ -2,7 +2,7 @@
   "howToPlay": [
     {
       "title": "Game Board",
-      "text": "This is the main tic-tac-toe board where the game is played. <br/> Click on any empty cell to make a move.",
+      "text": "This is the main tic-tac-toe board where the game is played.",
       "element": "#tic-tac-toe-board",
       "position": "left",
       "highlight": true
@@ -47,7 +47,8 @@
       "text": "Here you can view the current game score. <br/> This area updates with each move to show who's leading.",
       "element": "#game-score",
       "position": "left",
-      "highlight": true
+      "highlight": true,
+      "selector": "#restart-button"
     },
     {
       "title": "Player Wins",
@@ -68,6 +69,13 @@
       "text": "This shows how many games the computer has won. <br/> It's updated each time the computer scores a victory.",
       "element": "#computer-won-score",
       "position": "bottom",
+      "highlight": false
+    },
+    {
+      "title": "Keep Playing!",
+      "text": "That's all for now. Enjoy the game and keep playing!",
+      "element": null,
+      "position": "center",
       "highlight": false
     }
   ]

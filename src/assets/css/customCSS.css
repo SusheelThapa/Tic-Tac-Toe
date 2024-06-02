@@ -1,7 +1,6 @@
 .shepherd-theme-custom {
     background-color: transparent !important;
     border-radius: 8px !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 1) !important;
     padding: 20px !important;
     color: white !important;
 
@@ -11,6 +10,7 @@
 
 .shepherd-element {
     background-color: transparent !important;
+    box-shadow: none !important;
 }
 
 .shepherd-theme-custom>.shepherd-content>.shepherd-text {
@@ -34,8 +34,10 @@
 }
 
 .shepherd-modal-overlay-container.shepherd-modal-is-visible {
-    opacity: 0 !important;
+    opacity: 0.85 !important;
 }
+
+/*
 
 .shepherd-step-content {
     white-space: nowrap;
@@ -58,4 +60,4 @@
     padding: 20px;
     border-radius: 5px;
     text-align: center;
-}
+} */
