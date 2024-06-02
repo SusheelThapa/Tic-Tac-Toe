@@ -103,7 +103,7 @@
 
 ## Demo
 
-We will add the demo video very soon.
+https://github.com/SusheelThapa/Tic-Tac-Toe/assets/83917129/a05ff10c-1560-4441-a315-718340db6a4e
 
 ## Installation
 
