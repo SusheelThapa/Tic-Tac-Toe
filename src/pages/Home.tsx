@@ -1,8 +1,5 @@
-// Home.tsx
-
 import { useEffect, useState } from "react";
-import { FaTrophy, FaRedo } from "react-icons/fa"; // Import icons
-import { SiAlienware } from "react-icons/si";
+
 import Board from "../components/Board";
 import Header from "../components/Header";
 import Score from "../components/Score";
@@ -16,6 +13,7 @@ import { startTour } from "../assets/json/startTour.json";
 import { playerTour } from "../assets/json/playerTour.json";
 
 import { useTicTacToe } from "../hooks/useTicTacToe";
+import GameOver from "../components/GameOver";
 
 const Home = () => {
   const [tour_status, setTourStatus] = useState<boolean>(true);
@@ -49,7 +47,7 @@ const Home = () => {
 
   useEffect(() => {
     const storedPlayerName = localStorage.getItem("player_name");
-    if (!playerName && !storedPlayerName && !status ) {
+    if (!playerName && !storedPlayerName && !status) {
       player_name.start();
     } else if (storedPlayerName) {
       setPlayerName(storedPlayerName);
@@ -81,37 +79,7 @@ const Home = () => {
           computerWins={computerWins}
           ties={ties}
         />
-        {gameOver && (
-          <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
-            <div
-              className="text-white text-xl p-4 rounded-lg flex justify-center items-center flex-col gap-5"
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
-              id="game-over-screen"
-            >
-              {winner === "Tie" ? (
-                <>
-                  <SiAlienware className=" text-[10rem]" />
-                  <p className="text-3xl">It's a Tie!</p>
-                </>
-              ) : (
-                <>
-                  <FaTrophy className=" text-[10rem]" />
-                  <p className="text-3xl">
-                    {winner === "X" ? "You have won" : "Agent T. has won"}
-                  </p>
-                </>
-              )}
-            </div>
-            <button
-              id="restart-button"
-              onClick={resetGame}
-              className="mt-4 p-2 bg-white text-black rounded-md flex items-center px-5 py-2 text-xl font-semibold"
-            >
-              <FaRedo className="mr-2" />
-              Restart
-            </button>
-          </div>
-        )}
+        {gameOver && <GameOver winner={winner} resetGame={resetGame} />}
       </div>
     </>
   );
