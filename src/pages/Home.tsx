@@ -49,12 +49,12 @@ const Home = () => {
 
   useEffect(() => {
     const storedPlayerName = localStorage.getItem("player_name");
-    if (!playerName && !storedPlayerName) {
+    if (!playerName && !storedPlayerName && !status ) {
       player_name.start();
     } else if (storedPlayerName) {
       setPlayerName(storedPlayerName);
     }
-  }, []);
+  }, [status]);
 
   useEffect(() => {
     localStorage.setItem("player_name", playerName);
