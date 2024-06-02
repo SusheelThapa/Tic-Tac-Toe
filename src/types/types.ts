@@ -9,4 +9,5 @@ export interface TourStep {
   element: null | string;
   position: string;
   highlight: boolean;
+  selector?:string
 }

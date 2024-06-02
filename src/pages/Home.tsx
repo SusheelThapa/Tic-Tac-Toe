@@ -12,18 +12,14 @@ import gameOverSound from "../assets/audio/game-over.mp3";
 import gameOverTieSound from "../assets/audio/game-over-tie.mp3";
 import { playComputerMove } from "../utils/playComputerMove";
 import ShepHerdTour from "../components/Shepherd/ShepHerdTour";
-import Shepherd from "shepherd.js";
-import { PopperPlacement, Step, StepOptions } from "shepherd.js/step";
-import { Tour } from "shepherd.js/tour";
 import "../assets/css/howToPlay.css";
+
+import { checkForWinner } from "../utils/tictactok";
 import { TourStep } from "../types/types";
+import { createTour } from "../services/createTour";
 
 import { howToPlay } from "../assets/json/how_to_play.json";
 import { startTour } from "../assets/json/startTour.json";
-import { cleanupLastHighlighted, toggleHighlight } from "../utils/highlight";
-
-import { checkForWinner } from "../utils/tictactok";
-import { displayProgressBar } from "../utils/progressBar";
 
 const Home = () => {
   const [tour_status, setTourStatus] = useState<boolean>(true);
@@ -98,159 +94,25 @@ const Home = () => {
     }
   };
 
-  const how_to_play: Tour = new Shepherd.Tour({
-    useModalOverlay: true,
-    defaultStepOptions: {
-      classes: "shepherd-theme-light",
-      cancelIcon: {
-        enabled: true,
-      },
-      scrollTo: { behavior: "smooth", block: "center" },
-    },
-  });
-
-  const start_tour: Tour = new Shepherd.Tour({
-    useModalOverlay: true,
-    defaultStepOptions: {
-      classes: "shepherd-theme-light",
-      cancelIcon: {
-        enabled: true,
-      },
-      scrollTo: { behavior: "smooth", block: "center" },
-    },
-  });
-
   const howToPlaySteps: TourStep[] = howToPlay;
   const startTourSteps: TourStep[] = startTour;
 
-  howToPlaySteps.forEach((step, index) => {
-    how_to_play.addStep({
-      title: step.title,
-      text: step.text,
-      attachTo: {
-        element: step.element,
-        on: step.position as PopperPlacement,
-      },
-      when: step.highlight
-        ? {
-            show() {
-              toggleHighlight(step.element, "add");
-              displayProgressBar(how_to_play);
-            },
-            hide: () => {
-              toggleHighlight(step.element, "remove");
-              displayProgressBar(how_to_play);
-            },
-          }
-        : {
-            show() {
-              displayProgressBar(how_to_play);
-            },
-          },
-      buttons: [
-        ...(index !== 0 ? [{ text: "Back", action: how_to_play.back }] : []),
-        {
-          text: index === howToPlaySteps.length - 1 ? "End Tour" : "Next",
-          action: how_to_play.next,
-        },
-      ],
-    });
+  // Define the multi-page tour cases
+  const multiPageTourCases = [
+    "FAQ Section",
+    "Developer Section",
+    "Over to you",
+  ];
+
+  const how_to_play = createTour(howToPlaySteps, { useModalOverlay: true });
+  const start_tour = createTour(startTourSteps, {
+    useModalOverlay: true,
+    multiPageTour: true,
+    multiPageTourCases: multiPageTourCases,
   });
-
-  startTourSteps.forEach((step, index) => {
-    let stepConfig: Step | StepOptions = {
-      title: step.title,
-      text: step.text,
-      attachTo: {
-        element: step.element,
-        on: step.position as PopperPlacement,
-      },
-      when: step.highlight
-        ? {
-            show() {
-              toggleHighlight(step.element, "add");
-              displayProgressBar(start_tour);
-            },
-            hide: () => {
-              toggleHighlight(step.element, "remove");
-              displayProgressBar(start_tour);
-            },
-          }
-        : {
-            show() {
-              displayProgressBar(start_tour);
-            },
-          },
-      buttons: [
-        ...(index !== 0 ? [{ text: "Back", action: start_tour.back }] : []),
-        {
-          text: index === startTourSteps.length - 1 ? "End Tour" : "Next",
-          action: start_tour.next,
-        },
-      ],
-    };
-
-    switch (step.title) {
-      case "FAQ Section":
-        stepConfig = {
-          ...stepConfig,
-          beforeShowPromise: function () {
-            return new Promise<void>(function (resolve) {
-              const link = document.querySelector(
-                "#faq > a"
-              ) as HTMLAnchorElement;
-              if (link) {
-                link.click();
-              }
-              resolve();
-            });
-          },
-        };
-        break;
-
-      case "Developer Section":
-        stepConfig = {
-          ...stepConfig,
-          beforeShowPromise: function () {
-            return new Promise<void>(function (resolve) {
-              const link = document.querySelector(
-                "#developer>a"
-              ) as HTMLAnchorElement;
-              if (link) {
-                link.click();
-              }
-              resolve();
-            });
-          },
-        };
-        break;
-
-      case "Over to you":
-        stepConfig = {
-          ...stepConfig,
-          beforeShowPromise: function () {
-            return new Promise<void>(function (resolve) {
-              const link = document.querySelector(
-                "#home > a"
-              ) as HTMLAnchorElement;
-              if (link) {
-                link.click();
-              }
-              resolve();
-            });
-          },
-        };
-    }
-
-    start_tour.addStep(stepConfig);
-  });
-
-  how_to_play.on("complete", cleanupLastHighlighted);
-  how_to_play.on("cancel", cleanupLastHighlighted);
-  start_tour.on("complete", cleanupLastHighlighted);
-  start_tour.on("cancel", cleanupLastHighlighted);
 
   const status = localStorage.getItem("shepherd-tour") != "yes";
+  
   return (
     <>
       {tour_status && status && <ShepHerdTour setTourStatus={setTourStatus} />}

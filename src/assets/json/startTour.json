@@ -75,7 +75,8 @@
       "text": "This section provides information about the developers involved in the project.",
       "element": "#developer-section",
       "position": "top",
-      "highlight": true
+      "highlight": true,
+      "selector": "#developer"
     },
     {
       "title": "Developer Image",
@@ -96,7 +97,8 @@
       "text": "Click on a question to reveal the answer.",
       "element": "#faq-section",
       "position": "left",
-      "highlight": false
+      "highlight": false,
+      "selector": "#faq"
     },
     {
       "title": "FAQ Pagination",
@@ -110,7 +112,8 @@
       "text": "That's all for now! <br/> Signing off, Agent T.",
       "element": null,
       "position": "top",
-      "highlight": false
+      "highlight": false,
+      "selector": "#home"
     }
   ]
 }
