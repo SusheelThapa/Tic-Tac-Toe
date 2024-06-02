@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import Shepherd from "shepherd.js";
+
 import Header from "../components/Header";
 
 import { FAQQuestionAnswer } from "../types/types";
@@ -7,7 +9,7 @@ import { FAQQuestionAnswer } from "../types/types";
 import { faq_data } from "../assets/json/FAQ.json";
 
 const FAQ: React.FC = () => {
-    const [faq] = useState<FAQQuestionAnswer[]>(faq_data);
+  const [faq] = useState<FAQQuestionAnswer[]>(faq_data);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 5;
@@ -29,7 +31,14 @@ const FAQ: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        mute={false}
+        handleMuteButton={(value: boolean) => {
+          console.log(value)
+        }}
+        how_to_play={new Shepherd.Tour({ useModalOverlay: true })}
+        start_tour={new Shepherd.Tour({ useModalOverlay: true })}
+      />
       <div className="mt-[1rem]">
         <div className="bg-black text-white p-8">
           <h1 className="text-4xl font-bold text-center mb-8 my-10">
@@ -51,7 +60,10 @@ const FAQ: React.FC = () => {
                 )}
               </div>
             ))}
-            <div className="flex justify-center space-x-2 mt-16" id="faq-pagination">
+            <div
+              className="flex justify-center space-x-2 mt-16"
+              id="faq-pagination"
+            >
               {Array.from({ length: totalPages }, (_, i) => (
                 <button
                   key={i}
