@@ -1,3 +1,5 @@
+// Board.tsx
+
 import { motion } from "framer-motion";
 
 interface Props {
@@ -5,6 +7,7 @@ interface Props {
   handleCellClick: (index: number) => void;
   animationTriggers: boolean[];
 }
+
 const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
   const X = ({ shouldAnimate }: { shouldAnimate: boolean }) => (
     <motion.div
@@ -72,11 +75,11 @@ const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
           </div>
         ))}
         {/* Vertical Lines */}
-        <div className="absolute left-1/3 top-0 bottom-0 w-1 bg-white"></div>
-        <div className="absolute left-2/3 top-0 bottom-0 w-1 bg-white"></div>
+        <div className="absolute left-1/3 top-4 bottom-4 w-1 bg-white"></div>
+        <div className="absolute left-2/3 top-4 bottom-4 w-1 bg-white"></div>
         {/* Horizontal Lines */}
-        <div className="absolute top-1/3 left-0 right-0 h-1 bg-white"></div>
-        <div className="absolute top-2/3 left-0 right-0 h-1 bg-white"></div>
+        <div className="absolute top-1/3 left-4 right-4 h-1 bg-white"></div>
+        <div className="absolute top-2/3 left-4 right-4 h-1 bg-white"></div>
       </div>
     </div>
   );
