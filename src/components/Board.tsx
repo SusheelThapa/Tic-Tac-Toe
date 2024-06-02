@@ -1,5 +1,4 @@
-// @ts-ignore
-import useSound from "use-sound";
+// Board.tsx
 
 import { motion } from "framer-motion";
 
@@ -8,6 +7,7 @@ interface Props {
   handleCellClick: (index: number) => void;
   animationTriggers: boolean[];
 }
+
 const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
   const X = ({ shouldAnimate }: { shouldAnimate: boolean }) => (
     <motion.div
