@@ -1,8 +1,7 @@
 import { FaGithub, FaShareNodes } from "react-icons/fa6";
 import { BiSolidUpvote } from "react-icons/bi";
 import logo from "../assets/images/logo.png";
-import { GoMute } from "react-icons/go";
-import { GoUnmute } from "react-icons/go";
+import { GoMute, GoUnmute } from "react-icons/go";
 import { Tour } from "shepherd.js/tour";
 import { Link } from "react-router-dom";
 import { FaPlusCircle } from "react-icons/fa";
@@ -18,7 +17,9 @@ interface Props {
 
 const Header = ({ mute, handleMuteButton, how_to_play, start_tour }: Props) => {
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  const [showModalCloseButton, setShowModalCloseButton] =
+    useState<boolean>(false);
+  const [modalMessage, setModalMessage] = useState<React.ReactNode>(null);
 
   const handleShare = async () => {
     const shareData = {
@@ -39,13 +40,43 @@ const Header = ({ mute, handleMuteButton, how_to_play, start_tour }: Props) => {
       try {
         await navigator.clipboard.writeText(window.location.href);
         setModalMessage(
-          "Link copied to clipboard. You can now share it manually."
+          <p>
+            Link copied to clipboard. <br />
+            You can now share it manually.
+          </p>
         );
         setShowModal(true);
+        setShowModalCloseButton(true);
       } catch (error) {
         console.error("Failed to copy the link:", error);
       }
     }
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setModalMessage(<p>Link copied to clipboard!</p>);
+      setShowModalCloseButton(true);
+    } catch (error) {
+      console.error("Failed to copy the link:", error);
+    }
+  };
+
+  const handleQuineVote = async () => {
+    setModalMessage(
+      <>
+        <p>Vote for me in Quine Quest 11</p>
+        <button
+          onClick={handleCopyLink}
+          className="mt-4 px-4 py-2 bg-black text-white rounded-lg"
+        >
+          Copy Link
+        </button>
+      </>
+    );
+    setShowModal(true);
+    setShowModalCloseButton(false);
   };
 
   return (
@@ -117,6 +148,7 @@ const Header = ({ mute, handleMuteButton, how_to_play, start_tour }: Props) => {
       <div
         id="quine-vote"
         className="relative group text-2xl sm:text-3xl cursor-pointer m-1"
+        onClick={handleQuineVote}
       >
         <a href="#">
           <BiSolidUpvote />
@@ -147,8 +179,12 @@ const Header = ({ mute, handleMuteButton, how_to_play, start_tour }: Props) => {
         </span>
       </div>
 
-      <Modal show={showModal} onClose={() => setShowModal(false)}>
-        {modalMessage}
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        showCloseButton={showModalCloseButton}
+      >
+        <div className="text-center">{modalMessage}</div>
       </Modal>
     </div>
   );

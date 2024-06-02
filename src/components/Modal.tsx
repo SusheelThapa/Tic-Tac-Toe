@@ -1,10 +1,11 @@
 interface Props {
   show: boolean;
   onClose: () => void;
-  children: string;
+  children: string | React.ReactElement;
+  showCloseButton?: boolean;
 }
 
-const Modal = ({ show, onClose, children }: Props) => {
+const Modal = ({ show, onClose, children, showCloseButton }: Props) => {
   if (!show) {
     return null;
   }
@@ -15,12 +16,14 @@ const Modal = ({ show, onClose, children }: Props) => {
         <div className="w-2/3 text-center text-lg font-semibold my-5 tracking-wider">
           {children}
         </div>
-        <button
-          onClick={onClose}
-          className="mt-4 px-4 py-2 w-full  bg-black text-white rounded-lg"
-        >
-          Close
-        </button>
+        {showCloseButton && (
+          <button
+            onClick={onClose}
+            className="mt-4 px-4 py-2 w-full  bg-black text-white rounded-lg"
+          >
+            Close
+          </button>
+        )}
       </div>
     </div>
   );
