@@ -5,6 +5,7 @@ import { Tour } from "shepherd.js/tour";
 import { TourStep } from "../types/types";
 import { cleanupLastHighlighted, toggleHighlight } from "../utils/highlight";
 import { displayProgressBar } from "../utils/progressBar";
+import { displayInputField } from "../utils/inputField";
 
 // Create a service for creating Shepherd tours
 export const createTour = (
@@ -13,6 +14,7 @@ export const createTour = (
     useModalOverlay: boolean;
     multiPageTour?: boolean;
     multiPageTourCases?: string[]; // Array of case names for multi-page tours
+    inputButtonFunction?: (value: string) => void;
   }
 ): Tour => {
   const tour = new Shepherd.Tour({
@@ -34,27 +36,50 @@ export const createTour = (
         element: step.element,
         on: step.position as PopperPlacement,
       },
-      when: step.highlight
-        ? {
-            show() {
-              toggleHighlight(step.element, "add");
-              displayProgressBar(tour);
-            },
-            hide: () => {
-              toggleHighlight(step.element, "remove");
-              displayProgressBar(tour);
-            },
+      when: {
+        show() {
+          if (step.highlight) {
+            toggleHighlight(step.element, "add");
           }
-        : {
-            show() {
-              displayProgressBar(tour);
-            },
-          },
+          if (step.progressBar !== false) {
+            displayProgressBar(tour);
+          }
+          if (!step.highlight && step.input) {
+            displayInputField(tour, step.input_placeholder);
+          }
+          if (step.highlight) {
+            console.log(step.input);
+          }
+        },
+        hide() {
+          if (step.highlight) {
+            toggleHighlight(step.element, "remove");
+          }
+          if (step.progressBar !== false) {
+            displayProgressBar(tour);
+          }
+        },
+      },
       buttons: [
         ...(index !== 0 ? [{ text: "Back", action: tour.back }] : []),
         {
-          text: index === steps.length - 1 ? "End Tour" : "Next",
-          action: tour.next,
+          text: step.input
+            ? "Submit"
+            : index === steps.length - 1
+            ? "End Tour"
+            : "Next",
+          action: step.input
+            ? () => {
+                if (tourOptions.inputButtonFunction) {
+                  const inputElement = document.querySelector(
+                    "#player-name"
+                  ) as HTMLInputElement;
+                  const inputValue = inputElement ? inputElement.value : "";
+                  tourOptions.inputButtonFunction(inputValue);
+                }
+                tour.next();
+              }
+            : tour.next,
         },
       ],
     };
@@ -63,8 +88,6 @@ export const createTour = (
       tourOptions.multiPageTour &&
       tourOptions.multiPageTourCases?.includes(step.title)
     ) {
-        console.log("Inside tour function")
-        console.log(step.element)
       stepConfig = {
         ...stepConfig,
         beforeShowPromise: function () {
@@ -72,9 +95,9 @@ export const createTour = (
             const link = document.querySelector(
               `${step.selector} > a`
             ) as HTMLAnchorElement;
-            console.log(link)
+            console.log(link);
             if (link) {
-                console.log("Link is clicked")
+              console.log("Link is clicked");
               link.click();
             }
             resolve();

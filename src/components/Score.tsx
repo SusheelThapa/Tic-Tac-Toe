@@ -1,10 +1,11 @@
 interface Props {
+  playerName: string;
   playerWins: number;
   computerWins: number;
   ties: number;
 }
 
-const Score = ({ playerWins, computerWins, ties }: Props) => {
+const Score = ({ playerName, playerWins, computerWins, ties }: Props) => {
   return (
     <div className="w-full text-lg tracking-wider flex flex-col sm:flex-row justify-center items-center">
       <div
@@ -12,7 +13,7 @@ const Score = ({ playerWins, computerWins, ties }: Props) => {
         className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-20 w-full sm:w-8/12 lg:w-6/12"
       >
         <div className="text-center" id="player-won-score">
-          <div>PLAYER(X)</div>
+          <div>{playerName.toUpperCase()}(X)</div>
           <div className="text-3xl sm:text-5xl">{playerWins}</div>
         </div>
         <div className="text-center" id="game-tie-score">

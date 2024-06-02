@@ -1,6 +1,6 @@
 // Home.tsx
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaTrophy, FaRedo } from "react-icons/fa"; // Import icons
 import { SiAlienware } from "react-icons/si";
 import Board from "../components/Board";
@@ -13,11 +13,14 @@ import { createTour } from "../services/createTour";
 
 import { howToPlay } from "../assets/json/how_to_play.json";
 import { startTour } from "../assets/json/startTour.json";
+import { playerTour } from "../assets/json/playerTour.json";
+
 import { useTicTacToe } from "../hooks/useTicTacToe";
 
 const Home = () => {
   const [tour_status, setTourStatus] = useState<boolean>(true);
   const [mute, setMute] = useState<boolean>(false);
+  const [playerName, setPlayerName] = useState<string>("");
 
   const {
     board,
@@ -38,7 +41,24 @@ const Home = () => {
     multiPageTourCases: ["FAQ Section", "Developer Section", "Over to you"],
   });
 
+  const player_name = createTour(playerTour, {
+    useModalOverlay: true,
+    inputButtonFunction: setPlayerName,
+  });
   const status = localStorage.getItem("shepherd-tour") != "yes";
+
+  useEffect(() => {
+    const storedPlayerName = localStorage.getItem("player_name");
+    if (!playerName && !storedPlayerName) {
+      player_name.start();
+    } else if (storedPlayerName) {
+      setPlayerName(storedPlayerName);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("player_name", playerName);
+  }, [playerName]);
 
   return (
     <>
@@ -56,6 +76,7 @@ const Home = () => {
           animationTriggers={animationTriggers}
         />
         <Score
+          playerName={playerName}
           playerWins={playerWins}
           computerWins={computerWins}
           ties={ties}

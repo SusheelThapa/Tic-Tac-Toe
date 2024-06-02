@@ -5,9 +5,12 @@ export interface FAQQuestionAnswer {
 
 export interface TourStep {
   title: string;
-  text: string;
+  text?: string;
   element: null | string;
   position: string;
   highlight: boolean;
-  selector?:string
+  progressBar?: boolean;
+  selector?: string;
+  input?: boolean;
+  input_placeholder?: string;
 }
