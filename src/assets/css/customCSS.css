@@ -1,63 +1,55 @@
 .shepherd-theme-custom {
-    background-color: transparent !important;
-    border-radius: 8px !important;
-    padding: 20px !important;
-    color: white !important;
+  background-color: transparent !important;
+  border-radius: 8px !important;
+  padding: 20px !important;
+  color: white !important;
 
-    font-weight: 600 !important;
-    letter-spacing: 2px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2px !important;
 }
 
 .shepherd-element {
-    background-color: transparent !important;
-    box-shadow: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.shepherd-theme-light.shepherd-element,
+.popup-animation {
+  animation: popup 0.5s normal !important;
+  transition: none !important;
 }
 
 .shepherd-theme-custom>.shepherd-content>.shepherd-text {
-    font-size: 1.6rem;
-    color: whitesmoke;
+  font-size: 1.6rem;
+  color: whitesmoke;
 }
 
 .shepherd-theme-custom>.shepherd-content>.shepherd-header {
-    display: none
+  display: none
 }
 
 .shepherd-theme-custom>.shepherd-content {
-    width: 45vw !important;
+  width: 45vw !important;
 }
 
 .shepherd-theme-custom>.shepherd-content>.shepherd-footer>.shepherd-button {
-    background-color: black !important;
-    color: white !important;
-    font-size: 1.6rem;
-    font-weight: 900 !important;
+  background-color: black !important;
+  color: white !important;
+  font-size: 1.6rem;
+  font-weight: 900 !important;
 }
 
 .shepherd-modal-overlay-container.shepherd-modal-is-visible {
-    opacity: 0.85 !important;
+  opacity: 0.85 !important;
 }
 
-/*
+@keyframes popup {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
 
-.shepherd-step-content {
-    white-space: nowrap;
+  100% {
+    transform: scale(1);
+  }
 }
-
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-} */

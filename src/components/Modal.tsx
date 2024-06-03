@@ -11,7 +11,7 @@ const Modal = ({ show, onClose, children, showCloseButton }: Props) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 popup-animation">
       <div className="bg-white p-3 rounded-lg shadow-lg text-center text-black flex flex-col justify-center items-center">
         <div className="w-2/3 text-center text-lg font-semibold my-5 tracking-wider">
           {children}

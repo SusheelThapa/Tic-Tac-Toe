@@ -51,6 +51,13 @@ export const createTour = (
           }
         },
         hide() {
+          const el = document.querySelector(
+            ".shepherd-element.shepherd-enabled"
+          );
+          if (el) {
+            el.classList.remove("animate-popup-open");
+            el.classList.add("animate-popup-close");
+          }
           if (step.highlight) {
             toggleHighlight(step.element, "remove");
           }
@@ -94,7 +101,7 @@ export const createTour = (
             const element = document.querySelector(`${step.selector}`) as
               | HTMLAnchorElement
               | HTMLButtonElement;
-              console.log(element)
+            console.log(element);
             if (element) {
               element.click();
             }

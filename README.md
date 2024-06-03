@@ -103,7 +103,7 @@
 
 ## Demo
 
-https://github.com/SusheelThapa/Tic-Tac-Toe/assets/83917129/a05ff10c-1560-4441-a315-718340db6a4e
+https://github.com/SusheelThapa/Tic-Tac-Toe/assets/83917129/33d1bddb-836f-435c-a699-441dd67f94dd
 
 ## Installation
 
@@ -145,7 +145,7 @@ Ensure you have `Node.js` and `npm` or `yarn` installed on your machine.
 
 ## Contributing
 
-We welcome contributions to enhance and improve [Quine-ZeroSpoil](CONTRIBUTING.md)! Feel free to submit issues, feature requests, or pull requests. Please adhere to our Code of Conduct.
+We welcome contributions to enhance and improve [Tic Tac Toe](CONTRIBUTING.md)! Feel free to submit issues, feature requests, or pull requests. Please adhere to our Code of Conduct.
 
 ## License
 
