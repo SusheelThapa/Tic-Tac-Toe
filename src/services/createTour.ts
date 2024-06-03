@@ -7,6 +7,34 @@ import { cleanupLastHighlighted, toggleHighlight } from "../utils/highlight";
 import { displayProgressBar } from "../utils/progressBar";
 import { displayInputField } from "../utils/inputField";
 
+import one from "../assets/images/stickman/one.gif";
+import two from "../assets/images/stickman/two.gif";
+import three from "../assets/images/stickman/three.gif";
+import four from "../assets/images/stickman/four.gif";
+import five from "../assets/images/stickman/five.gif";
+import six from "../assets/images/stickman/six.gif";
+import seven from "../assets/images/stickman/seven.gif";
+import eight from "../assets/images/stickman/eight.gif";
+import nine from "../assets/images/stickman/nine.gif";
+import ten from "../assets/images/stickman/ten.gif";
+import eleven from "../assets/images/stickman/eleven.gif";
+
+import { getRandomNumber } from "../utils/getRandomNumber";
+
+const stickManGIFList = [
+  one,
+  two,
+  three,
+  four,
+  five,
+  six,
+  seven,
+  eight,
+  nine,
+  ten,
+  eleven,
+];
+
 // Create a service for creating Shepherd tours
 export const createTour = (
   steps: TourStep[],
@@ -15,6 +43,7 @@ export const createTour = (
     multiPageTour?: boolean;
     multiPageTourCases?: string[]; // Array of case names for multi-page tours
     inputButtonFunction?: (value: string) => void;
+    showGIF?: boolean;
   }
 ): Tour => {
   const tour = new Shepherd.Tour({
@@ -33,7 +62,15 @@ export const createTour = (
   steps.forEach((step, index) => {
     let stepConfig: Step | StepOptions = {
       title: step.title,
-      text: step.text,
+      text: tourOptions.showGIF
+        ? `<div class="flex justify-center items-center w-full my-4 rounded-xl">
+            <img src="${
+              stickManGIFList[getRandomNumber(0, stickManGIFList.length -1)]
+            }" class="border-8 border-black p-2 bg-white grayscale overflow-hidden w-3/4 h-[8rem] rounded-xl"/>
+          </div>
+          <p>${step.text}</p>
+          `
+        : step.text,
       attachTo: {
         element: step.element,
         on: step.position as PopperPlacement,

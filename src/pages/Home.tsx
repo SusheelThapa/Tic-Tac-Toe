@@ -41,6 +41,7 @@ const Home = () => {
     useModalOverlay: true,
     multiPageTour: true,
     multiPageTourCases: ["FAQ Section", "Developer Section", "Over to you"],
+    showGIF: true,
   });
 
   const player_name = createTour(playerTour, {
