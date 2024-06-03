@@ -55,7 +55,7 @@ const Header = ({ mute, handleMuteButton, how_to_play, start_tour }: Props) => {
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText("https://quine.sh/repo/SusheelThapa-Tic-Tac-Toe-808184790?utm_source=copy&utm_share_context=rdp");
       setModalMessage(<p>Link copied to clipboard!</p>);
       setShowModalCloseButton(true);
     } catch (error) {
