@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import Shepherd from "shepherd.js";
 
 import Header from "../components/Header";
 
@@ -36,8 +35,6 @@ const FAQ: React.FC = () => {
         handleMuteButton={(value: boolean) => {
           console.log(value)
         }}
-        how_to_play={new Shepherd.Tour({ useModalOverlay: true })}
-        start_tour={new Shepherd.Tour({ useModalOverlay: true })}
       />
       <div className="mt-[1rem]">
         <div className="bg-black text-white p-8">

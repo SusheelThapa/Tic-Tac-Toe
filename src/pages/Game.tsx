@@ -7,7 +7,7 @@ import { useTicTacToe } from "../hooks/useTicTacToe";
 import GameOver from "../components/GameOver";
 
 const Game = () => {
-  const [playerName] = useState<string>("John Doe");
+  const [playerName] = useState<string>("Player");
 
   const {
     board,
