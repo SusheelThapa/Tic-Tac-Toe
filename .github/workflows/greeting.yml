@@ -1,0 +1,29 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: |
+            🎉 Hello @${{ github.actor }}! Thank you for submitting your first issue. We appreciate your interest and contribution to our project. If you have any queries or require assistance, do not hesitate to reach out.
+
+            If you are interested in tackling this issue, please inform us by commenting below.
+
+            We encourage you to review our [Contribution Guidelines](https://github.com/SusheelThapa/Tic-Tac-Toe/blob/main/CONTRIBUTING.md) to help you get started.
+
+            Thank you for your contribution! :heart
+
+          pr-message: |
+            🎉 Hello @${{ github.actor }}! Congratulations on your first pull request and thank you for your contribution. It is greatly appreciated. If you have any questions or need further assistance, please let us know.
+
+            Our team will review your changes shortly. Meanwhile, feel free to explore the "Issues" tab for more opportunities to contribute.
+
+            Thank you once again for your dedication! :heart
