@@ -4,8 +4,9 @@ import { SiAlienware } from "react-icons/si";
 interface Props {
   winner: string | null;
   resetGame: () => void;
+  isTwoPlayerMode: boolean; // New prop to determine the mode
 }
-const GameOver = ({ winner, resetGame }: Props) => {
+const GameOver = ({ winner, resetGame, isTwoPlayerMode }: Props) => {
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-none backdrop-blur-xl">
       <div
@@ -21,7 +22,13 @@ const GameOver = ({ winner, resetGame }: Props) => {
           <>
             <FaTrophy className=" text-[10rem]" />
             <p className="text-3xl">
-              {winner === "X" ? "You have won" : "Agent T. has won"}
+              {winner === "X"
+                ? isTwoPlayerMode
+                  ? "Player One has won"
+                  : "Player has won"
+                : isTwoPlayerMode
+                ? "Player Two has won"
+                : "Computer has won"}
             </p>
           </>
         )}

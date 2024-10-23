@@ -8,19 +8,23 @@ import noteLow from "../assets/audio/note-low.mp3";
 import gameOverSound from "../assets/audio/game-over.mp3";
 import gameOverTieSound from "../assets/audio/game-over-tie.mp3";
 
-import { playComputerMove } from "../utils/playComputerMove";
 import { checkForWinner } from "../utils/tictactok";
 
-export const useTicTacToe = (mute: boolean) => {
+export const useTicTacToe = (
+  mute: boolean,
+  isTwoPlayerMode: boolean,
+  playComputerMove: (board: string[]) => number
+) => {
   const [board, setBoard] = useState(Array(9).fill(""));
-  const [isXTurn, setIsXTurn] = useState(true);
+  const [isPlayerOneTurn, setIsPlayerOneTurn] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
   const [animationTriggers, setAnimationTriggers] = useState<boolean[]>(
     Array(9).fill(false)
   );
-  const [playerWins, setPlayerWins] = useState(0);
-  const [computerWins, setComputerWins] = useState(0);
+
+  const [playerOneWins, setPlayerOneWins] = useState(0);
+  const [playerTwoWins, setPlayerTwoWins] = useState(0);
   const [ties, setTies] = useState(0);
 
   const [playHighNote] = useSound(noteHigh, { volume: mute ? 0 : 1 });
@@ -31,54 +35,56 @@ export const useTicTacToe = (mute: boolean) => {
   });
 
   useEffect(() => {
-    if (!isXTurn && !gameOver) {
+    // If it's not a two-player game and it's Player Two's turn (i.e., computer's turn), simulate the computer's move
+    if (!isTwoPlayerMode && !isPlayerOneTurn && !gameOver) {
       const computerIndex = playComputerMove(board);
       if (computerIndex !== -1) {
-        setTimeout(() => handleCellClick(computerIndex, false), 500); // Delay computer move to simulate thinking and allow animations
+        setTimeout(() => handleCellClick(computerIndex), 500); 
       }
     }
-  }, [isXTurn, gameOver, board]); // Dependency array to trigger effect on turn change or game status change
+  }, [isPlayerOneTurn, gameOver, board, isTwoPlayerMode]);
 
   const resetGame = () => {
     setBoard(Array(9).fill(""));
-    setIsXTurn(true);
+    setIsPlayerOneTurn(true);
     setGameOver(false);
     setWinner(null);
   };
 
-  const handleCellClick = (index: number, player = true) => {
-    if (gameOver || board[index] !== "") return; // Prevent overwriting a cell
-
+  const handleCellClick = (index: number) => {
+    if (gameOver || board[index] !== "") return; 
     const newBoard = [...board];
-    const newTriggers = Array(9).fill(false); // Reset all triggers
+    const newTriggers = Array(9).fill(false);
 
-    newBoard[index] = isXTurn ? "X" : "O";
-    newTriggers[index] = true; // Trigger animation only for the clicked cell
-
+    newBoard[index] = isPlayerOneTurn ? "X" : "O";
+    newTriggers[index] = true; 
     setBoard(newBoard);
     setAnimationTriggers(newTriggers);
 
-    const currentNote = player ? playHighNote : playLowNote;
-    currentNote(); // Play the respective sound note
+   
+    const currentNote = isPlayerOneTurn ? playHighNote : playLowNote;
+    currentNote();
 
     const winner = checkForWinner(newBoard);
     if (winner) {
       setWinner(winner);
-      setGameOver(true); // End the game
+      setGameOver(true); 
 
-      winner === "X"
-        ? setPlayerWins((prevWins) => prevWins + 1)
-        : setComputerWins((prevWins) => prevWins + 1);
+      if (winner === "X") {
+        setPlayerOneWins((prevWins) => prevWins + 1);
+      } else {
+        setPlayerTwoWins((prevWins) => prevWins + 1);
+      }
 
       playGameOver();
     } else if (!newBoard.includes("")) {
       setWinner("Tie");
       playGameOverTie();
-      setGameOver(true); // End the game if all cells are filled and no winner
+      setGameOver(true); 
 
       setTies((prevTies) => prevTies + 1);
     } else {
-      setIsXTurn(!isXTurn);
+      setIsPlayerOneTurn(!isPlayerOneTurn); 
     }
   };
 
@@ -87,8 +93,8 @@ export const useTicTacToe = (mute: boolean) => {
     gameOver,
     winner,
     animationTriggers,
-    playerWins,
-    computerWins,
+    playerOneWins,
+    playerTwoWins,
     ties,
     resetGame,
     handleCellClick,

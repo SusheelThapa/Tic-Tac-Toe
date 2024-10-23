@@ -1,29 +1,40 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import Board from "../components/Board";
 import Score from "../components/Score";
-
 import { useTicTacToe } from "../hooks/useTicTacToe";
 import GameOver from "../components/GameOver";
+import { playComputerMove } from "../utils/playComputerMove";
 
 const Game = () => {
-  const [playerName] = useState<string>("Player");
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const isTwoPlayerMode = searchParams.get("mode") === "two-player";
+
+  const [playerOneName] = useState<string>(
+    isTwoPlayerMode ? "Player One" : "Player"
+  );
+  const [playerTwoName] = useState<string>(
+    isTwoPlayerMode ? "Player Two" : "Computer"
+  );
 
   const {
     board,
     gameOver,
     winner,
     animationTriggers,
-    playerWins,
-    computerWins,
+    playerOneWins,
+    playerTwoWins,
     ties,
     resetGame,
     handleCellClick,
-  } = useTicTacToe(false);
+  } = useTicTacToe(false, isTwoPlayerMode,playComputerMove); // Pass game mode to the hook
 
   useEffect(() => {
-    localStorage.setItem("player_name", playerName);
-  }, [playerName]);
+    localStorage.setItem("player_one_name", playerOneName);
+    localStorage.setItem("player_two_name", playerTwoName);
+  }, [playerOneName, playerTwoName]);
 
   return (
     <>
@@ -34,12 +45,13 @@ const Game = () => {
           animationTriggers={animationTriggers}
         />
         <Score
-          playerName={playerName}
-          playerWins={playerWins}
-          computerWins={computerWins}
+          playerOneName={playerOneName}
+          playerTwoName={playerTwoName}
+          playerOneWins={playerOneWins}
+          playerTwoWins={playerTwoWins}
           ties={ties}
         />
-        {gameOver && <GameOver winner={winner} resetGame={resetGame} />}
+        {gameOver && <GameOver winner={winner} resetGame={resetGame} isTwoPlayerMode={isTwoPlayerMode} />}
       </div>
     </>
   );
