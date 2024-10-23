@@ -1,7 +1,6 @@
 import Header from "../components/Header";
 import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
 import susheel from "../assets/images/susheel.jpeg";
-import Shepherd from "shepherd.js";
 
 const Developer = () => {
   return (
@@ -11,8 +10,6 @@ const Developer = () => {
         handleMuteButton={(value: boolean) => {
           console.log(value);
         }}
-        how_to_play={new Shepherd.Tour({ useModalOverlay: true })}
-        start_tour={new Shepherd.Tour({ useModalOverlay: true })}
       />
       <div className="flex items-center justify-center" id="developer-section">
         <div className="flex flex-col md:flex-row items-center justify-center bg-black text-white p-8 h-[80vh] w-4/5">
