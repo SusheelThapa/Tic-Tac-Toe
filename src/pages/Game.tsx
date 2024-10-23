@@ -51,7 +51,7 @@ const Game = () => {
           playerTwoWins={playerTwoWins}
           ties={ties}
         />
-        {gameOver && <GameOver winner={winner} resetGame={resetGame} />}
+        {gameOver && <GameOver winner={winner} resetGame={resetGame} isTwoPlayerMode={isTwoPlayerMode} />}
       </div>
     </>
   );
