@@ -4,9 +4,19 @@ import { SiAlienware } from "react-icons/si";
 interface Props {
   winner: string | null;
   resetGame: () => void;
-  isTwoPlayerMode: boolean; // New prop to determine the mode
+  isTwoPlayerMode: boolean;
 }
-const GameOver = ({ winner, resetGame, isTwoPlayerMode }: Props) => {
+
+/**
+ * GameOver component that displays the result of the game (winner or tie) and provides an option to restart the game.
+ * 
+ * @component
+ * @param {string | null} winner - The result of the game ('X', 'O', 'Tie', or null).
+ * @param {() => void} resetGame - Function to reset the game state and start a new game.
+ * @param {boolean} isTwoPlayerMode - Boolean indicating whether the game is in two-player mode.
+ * @returns {JSX.Element} - Returns the rendered game over screen.
+ */
+const GameOver = ({ winner, resetGame, isTwoPlayerMode }: Props): JSX.Element => {
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-none backdrop-blur-xl">
       <div

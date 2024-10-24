@@ -1,5 +1,3 @@
-// Board.tsx
-
 import { motion } from "framer-motion";
 
 interface Props {
@@ -8,13 +6,27 @@ interface Props {
   animationTriggers: boolean[];
 }
 
+/**
+ * Board component for rendering the Tic-Tac-Toe grid and handling animations.
+ * 
+ * @component
+ * @param {string[]} board - The current state of the game board, an array of 'X', 'O', or empty strings.
+ * @param {(index: number) => void} handleCellClick - Function to handle clicks on board cells.
+ * @param {boolean[]} animationTriggers - Array indicating which cells should trigger animations.
+ * @returns {JSX.Element} - Returns the rendered Tic-Tac-Toe board component.
+ */
 const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
+
+  /**
+   * Component to render the "X" symbol with optional animation.
+   * 
+   * @param {boolean} shouldAnimate - Whether to animate the "X" symbol on render.
+   * @returns {JSX.Element} - Returns the "X" symbol component.
+   */
   const X = ({ shouldAnimate }: { shouldAnimate: boolean }) => (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={
-        shouldAnimate ? { opacity: 1, scale: [0, 1.2, 1] } : { opacity: 1 }
-      }
+      animate={shouldAnimate ? { opacity: 1, scale: [0, 1.2, 1] } : { opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="flex items-center justify-center w-full h-full"
     >
@@ -39,12 +51,16 @@ const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
     </motion.div>
   );
 
+  /**
+   * Component to render the "O" symbol with optional animation.
+   * 
+   * @param {boolean} shouldAnimate - Whether to animate the "O" symbol on render.
+   * @returns {JSX.Element} - Returns the "O" symbol component.
+   */
   const O = ({ shouldAnimate }: { shouldAnimate: boolean }) => (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={
-        shouldAnimate ? { opacity: 1, scale: [0, 1.2, 1] } : { opacity: 1 }
-      }
+      animate={shouldAnimate ? { opacity: 1, scale: [0, 1.2, 1] } : { opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="flex items-center justify-center w-full h-full"
     >
@@ -66,14 +82,11 @@ const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
             className="w-full h-full flex items-center justify-center p-4 cursor-pointer"
             onClick={() => handleCellClick(index)}
           >
-            {cell === "X" ? (
-              <X shouldAnimate={animationTriggers[index]} />
-            ) : null}
-            {cell === "O" ? (
-              <O shouldAnimate={animationTriggers[index]} />
-            ) : null}
+            {cell === "X" ? <X shouldAnimate={animationTriggers[index]} /> : null}
+            {cell === "O" ? <O shouldAnimate={animationTriggers[index]} /> : null}
           </div>
         ))}
+
         {/* Vertical Lines */}
         <div className="absolute left-1/3 top-4 bottom-4 w-1 bg-white"></div>
         <div className="absolute left-2/3 top-4 bottom-4 w-1 bg-white"></div>

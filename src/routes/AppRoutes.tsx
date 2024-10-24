@@ -9,10 +9,10 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/game-mode-selector" element={<GameModeSelector />} />
-      <Route path="/new-game" element={<Game />} />
-      <Route path="/developer" element={<Developer />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/game-mode-selector" element={<GameModeSelector />} />
+        <Route path="/new-game" element={<Game />} />
+        <Route path="/developer" element={<Developer />} />
         <Route path="/faq" element={<FAQ />} />
       </Routes>
     </Router>

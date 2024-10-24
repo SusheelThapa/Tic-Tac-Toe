@@ -6,13 +6,24 @@ interface Props {
   ties: number;
 }
 
+/**
+ * Score component that displays the score for Player One, Player Two (or Computer), and the number of ties.
+ *
+ * @component
+ * @param {string} playerOneName - The name of Player One.
+ * @param {string} playerTwoName - The name of Player Two or Computer.
+ * @param {number} playerOneWins - The number of games won by Player One.
+ * @param {number} playerTwoWins - The number of games won by Player Two or Computer.
+ * @param {number} ties - The number of games that resulted in a tie.
+ * @returns {JSX.Element} - Returns the rendered score display component.
+ */
 const Score = ({
   playerOneName,
   playerTwoName,
   playerOneWins,
   playerTwoWins,
   ties,
-}: Props) => {
+}: Props): JSX.Element => {
   return (
     <div className="w-full text-lg tracking-wider flex flex-col sm:flex-row justify-center items-center">
       <div
