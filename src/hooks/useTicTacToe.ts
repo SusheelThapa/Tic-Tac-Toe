@@ -40,7 +40,7 @@ export const useTicTacToe = (
     if (!isTwoPlayerMode && !isPlayerOneTurn && !gameOver) {
       const computerIndex = computerMove(board);
       if (computerIndex !== -1) {
-        setTimeout(() => handleCellClick(computerIndex), 500);
+        setTimeout(() => handleCellClick(computerIndex), 1000);
       }
     }
   }, [isPlayerOneTurn, gameOver, board, isTwoPlayerMode]);
@@ -101,5 +101,6 @@ export const useTicTacToe = (
     ties,
     resetGame,
     handleCellClick,
+    isPlayerOneTurn,
   };
 };

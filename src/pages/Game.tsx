@@ -10,13 +10,13 @@ import { playComputerMove } from "../utils/playComputerMove";
 /**
  * Game component that renders the Tic-Tac-Toe game UI and manages game state.
  * It supports both two-player mode and single-player mode against the computer.
- * 
+ *
  * @component
  */
 const Game = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  
+
   // Determines if it's two-player mode based on the query parameter "mode"
   const isTwoPlayerMode = searchParams.get("mode") === "two-player";
 
@@ -39,6 +39,7 @@ const Game = () => {
     ties,
     resetGame,
     handleCellClick,
+    isPlayerOneTurn,
   } = useTicTacToe(false, isTwoPlayerMode, playComputerMove); // Pass game mode to the hook
 
   // Save player names to localStorage on mount
@@ -56,6 +57,7 @@ const Game = () => {
           animationTriggers={animationTriggers}
         />
         <Score
+          isPlayerOneTurn={isPlayerOneTurn}
           playerOneName={playerOneName}
           playerTwoName={playerTwoName}
           playerOneWins={playerOneWins}
