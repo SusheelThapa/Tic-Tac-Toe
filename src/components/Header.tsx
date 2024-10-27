@@ -1,5 +1,4 @@
 import { FaGithub } from "react-icons/fa6";
-import logo from "../assets/images/logo.png";
 import { GoMute, GoUnmute } from "react-icons/go";
 import { Link } from "react-router-dom";
 
@@ -13,7 +12,7 @@ const Header = ({ mute, handleMuteButton }: Props) => {
     <div className="flex justify-between items-center mx-4 sm:mx-10 gap-4 sm:gap-10 pt-4">
       <div className="rounded-md">
         <Link to="/">
-          <img src={logo} alt="logo" className="w-24 sm:w-20" />
+          <img src="/images/logo.png" alt="logo" className="w-24 sm:w-20" />
         </Link>
         <span className="font-semibold absolute left-1/2 transform -translate-x-1/2 translate-y-10 invisible group-hover:visible bg-white text-black text-sm tracking-widest rounded-md py-1 px-2 whitespace-nowrap">
           Logo

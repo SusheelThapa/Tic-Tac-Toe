@@ -1,6 +1,5 @@
 import Header from "../components/Header";
 import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
-import susheel from "../assets/images/susheel.jpeg";
 
 const Developer = () => {
   return (
@@ -18,7 +17,7 @@ const Developer = () => {
             id="developer-image"
           >
             <img
-              src={susheel}
+              src="/images/susheel.jpeg"
               alt="Profile"
               className="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover"
             />
