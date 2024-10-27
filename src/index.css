@@ -5,7 +5,7 @@
 @font-face {
     font-family: 'Woff';
     src: local('Woff'),
-        url('./assets/fonts/font.woff2') format("woff2");
+        url('/fonts/font.woff2') format("woff2");
 }
 
 * {

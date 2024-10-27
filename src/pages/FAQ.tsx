@@ -1,17 +1,23 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 
 import Header from "../components/Header";
 
 import { FAQQuestionAnswer } from "../types/types";
 
-import { faq_data } from "../assets/json/FAQ.json";
-
 const FAQ: React.FC = () => {
-  const [faq] = useState<FAQQuestionAnswer[]>(faq_data);
+  const [faq, setFaq] = useState<FAQQuestionAnswer[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 5;
+
+  useEffect(() => {
+    fetch("/json/FAQ.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setFaq(data);
+      })
+      .catch((error) => console.error("Error loading FAQ data:", error));
+  }, []);
 
   const toggleAnswer = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -33,7 +39,7 @@ const FAQ: React.FC = () => {
       <Header
         mute={false}
         handleMuteButton={(value: boolean) => {
-          console.log(value)
+          console.log(value);
         }}
       />
       <div className="mt-[1rem]">

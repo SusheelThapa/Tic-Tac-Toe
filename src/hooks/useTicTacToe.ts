@@ -3,16 +3,11 @@ import { useState, useEffect } from "react";
 // @ts-ignore
 import useSound from "use-sound";
 
-import noteHigh from "../assets/audio/note-high.mp3";
-import noteLow from "../assets/audio/note-low.mp3";
-import gameOverSound from "../assets/audio/game-over.mp3";
-import gameOverTieSound from "../assets/audio/game-over-tie.mp3";
-
 import { checkForWinner } from "../utils/tictactok";
 
 /**
  * Custom hook for managing Tic-Tac-Toe game state.
- * 
+ *
  * @param {boolean} mute - Whether to mute game sounds.
  * @param {boolean} isTwoPlayerMode - If true, enables two-player mode; otherwise, one-player mode with a computer.
  * @param {(board: string[]) => number} computerMove - Function to determine computer's move based on current board state.
@@ -36,10 +31,10 @@ export const useTicTacToe = (
   const [ties, setTies] = useState(0);
 
   const soundSettings = { volume: mute ? 0 : 1 };
-  const [playHighNote] = useSound(noteHigh, soundSettings);
-  const [playLowNote] = useSound(noteLow, soundSettings);
-  const [playGameOver] = useSound(gameOverSound, soundSettings);
-  const [playGameOverTie] = useSound(gameOverTieSound, soundSettings);
+  const [playHighNote] = useSound("/audio/note-high.mp3", soundSettings);
+  const [playLowNote] = useSound("/audio/note-low.mp3", soundSettings);
+  const [playGameOver] = useSound("/audio/game-over.mp3", soundSettings);
+  const [playGameOverTie] = useSound("/audio/game-over-tie.mp3", soundSettings);
 
   useEffect(() => {
     if (!isTwoPlayerMode && !isPlayerOneTurn && !gameOver) {
@@ -62,7 +57,7 @@ export const useTicTacToe = (
 
   /**
    * Handles a player's move by updating the board and checking for a winner.
-   * 
+   *
    * @param {number} index - The index of the clicked cell on the board.
    */
   const handleCellClick = (index: number) => {
