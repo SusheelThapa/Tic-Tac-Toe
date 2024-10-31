@@ -17,6 +17,8 @@ interface Props {
  * @returns {JSX.Element} - Returns the rendered game over screen.
  */
 const GameOver = ({ winner, resetGame, isTwoPlayerMode }: Props): JSX.Element => {
+  const playerOneName = localStorage.getItem("player_one_name")
+  const playerTwoName = localStorage.getItem("player_two_name")
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-none backdrop-blur-xl">
       <div
@@ -34,10 +36,10 @@ const GameOver = ({ winner, resetGame, isTwoPlayerMode }: Props): JSX.Element =>
             <p className="text-3xl">
               {winner === "X"
                 ? isTwoPlayerMode
-                  ? "Player One has won"
+                  ? `${playerOneName} has won`
                   : "Player has won"
                 : isTwoPlayerMode
-                ? "Player Two has won"
+                ? `${playerTwoName} has won`
                 : "Computer has won"}
             </p>
           </>

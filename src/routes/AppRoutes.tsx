@@ -4,6 +4,7 @@ import Developer from "../pages/Developer";
 import FAQ from "../pages/FAQ";
 import Game from "../pages/Game";
 import GameModeSelector from "../pages/GameModeSelector";
+import PlayerNameInput from "../pages/PlayerNameInput";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
         <Route path="/new-game" element={<Game />} />
         <Route path="/developer" element={<Developer />} />
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/player-name-input" element={<PlayerNameInput />} />
       </Routes>
     </Router>
   );
