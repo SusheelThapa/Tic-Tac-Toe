@@ -5,7 +5,11 @@ const GameModeSelector = () => {
   const navigate = useNavigate();
 
   const handleModeSelection = (mode: GameMode) => {
-    navigate(`/new-game?mode=${mode}`);
+    if(mode == "two-player"){
+      navigate(`/player-name-input`);
+    }else{
+      navigate(`/new-game?mode=${mode}`);
+    }
   };
 
   return (

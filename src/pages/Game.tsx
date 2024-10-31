@@ -22,10 +22,10 @@ const Game = () => {
 
   // Set player names based on the game mode
   const [playerOneName] = useState<string>(
-    isTwoPlayerMode ? "Player One" : "Player"
+    localStorage.getItem("player_one_name") || "Player"
   );
   const [playerTwoName] = useState<string>(
-    isTwoPlayerMode ? "Player Two" : "Computer"
+    localStorage.getItem("player_two_name") || "Player Two"
   );
 
   // Destructure the values returned by useTicTacToe hook
