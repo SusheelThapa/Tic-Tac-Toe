@@ -21,3 +21,11 @@ body {
     color: white;
     font-family: 'Woff';
 }
+/* Highlight the winning line cells in green */
+.board-cell.winning-line {
+    background-color: #32CD32;
+    /* Green color for winning line */
+}
+.blur {
+    filter: blur(5px);
+}

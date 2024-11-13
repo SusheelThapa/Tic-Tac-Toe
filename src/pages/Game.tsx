@@ -17,10 +17,10 @@ const Game = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
-  // Determines if it's two-player mode based on the query parameter "mode"
+  
   const isTwoPlayerMode = searchParams.get("mode") === "two-player";
 
-  // Set player names based on the game mode
+ 
   const [playerOneName] = useState<string>(
     isTwoPlayerMode ? "Player One" : "Player"
   );
@@ -28,11 +28,12 @@ const Game = () => {
     isTwoPlayerMode ? "Player Two" : "Computer"
   );
 
-  // Destructure the values returned by useTicTacToe hook
+
   const {
     board,
     gameOver,
     winner,
+    winningLine,
     animationTriggers,
     playerOneWins,
     playerTwoWins,
@@ -40,13 +41,34 @@ const Game = () => {
     resetGame,
     handleCellClick,
     isPlayerOneTurn,
-  } = useTicTacToe(false, isTwoPlayerMode, playComputerMove); // Pass game mode to the hook
+  } = useTicTacToe(false, isTwoPlayerMode, playComputerMove);
 
-  // Save player names to localStorage on mount
+
+  const [showRestartButton, setShowRestartButton] = useState(false);
+
+ 
   useEffect(() => {
     localStorage.setItem("player_one_name", playerOneName);
     localStorage.setItem("player_two_name", playerTwoName);
   }, [playerOneName, playerTwoName]);
+
+  
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter" && gameOver) {
+        setShowRestartButton(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [gameOver]);
+
+  
+  const handleRestartClick = () => {
+    resetGame();
+    setShowRestartButton(false);
+  };
 
   return (
     <>
@@ -55,6 +77,7 @@ const Game = () => {
           board={board}
           handleCellClick={handleCellClick}
           animationTriggers={animationTriggers}
+          winningLine={winningLine} 
         />
         <Score
           isPlayerOneTurn={isPlayerOneTurn}
@@ -69,7 +92,19 @@ const Game = () => {
             winner={winner}
             resetGame={resetGame}
             isTwoPlayerMode={isTwoPlayerMode}
+            winningLine={null}
           />
+        )}
+        {showRestartButton && (
+          <div className="flex flex-col items-center mt-4">
+            <div className="text-6xl text-yellow-500 mb-2">🏆</div>
+            <button
+              onClick={handleRestartClick}
+              className="px-4 py-2 bg-blue-500 text-white rounded"
+            >
+              Restart Game
+            </button>
+          </div>
         )}
       </div>
     </>
