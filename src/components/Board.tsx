@@ -4,23 +4,25 @@ interface Props {
   board: string[];
   handleCellClick: (index: number) => void;
   animationTriggers: boolean[];
+  winningLine: number[] | null;
 }
 
 /**
- * Board component for rendering the Tic-Tac-Toe grid and handling animations.
+ * Board component to render the Tic-Tac-Toe grid and handle animations.
  * 
  * @component
- * @param {string[]} board - The current state of the game board, an array of 'X', 'O', or empty strings.
- * @param {(index: number) => void} handleCellClick - Function to handle clicks on board cells.
+ * @param {string[]} board - The current state of the board, an array of 'X', 'O', or empty strings.
+ * @param {(index: number) => void} handleCellClick - Function to handle cell clicks on the board.
  * @param {boolean[]} animationTriggers - Array indicating which cells should trigger animations.
+ * @param {number[] | null} winningLine - Array of indices for the winning line, or null if there's no winner.
  * @returns {JSX.Element} - Returns the rendered Tic-Tac-Toe board component.
  */
-const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
+const Board = ({ board, handleCellClick, animationTriggers, winningLine }: Props) => {
 
   /**
    * Component to render the "X" symbol with optional animation.
    * 
-   * @param {boolean} shouldAnimate - Whether to animate the "X" symbol on render.
+   * @param {boolean} shouldAnimate - Determines whether to animate the "X" symbol upon rendering.
    * @returns {JSX.Element} - Returns the "X" symbol component.
    */
   const X = ({ shouldAnimate }: { shouldAnimate: boolean }) => (
@@ -54,7 +56,7 @@ const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
   /**
    * Component to render the "O" symbol with optional animation.
    * 
-   * @param {boolean} shouldAnimate - Whether to animate the "O" symbol on render.
+   * @param {boolean} shouldAnimate - Determines whether to animate the "O" symbol upon rendering.
    * @returns {JSX.Element} - Returns the "O" symbol component.
    */
   const O = ({ shouldAnimate }: { shouldAnimate: boolean }) => (
@@ -79,7 +81,9 @@ const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
         {board.map((cell, index) => (
           <div
             key={index}
-            className="w-full h-full flex items-center justify-center p-4 cursor-pointer"
+            className={`w-full h-full flex items-center justify-center p-4 cursor-pointer ${
+              winningLine?.includes(index) ? "bg-green-300" : "" // Highlight winning cell
+            }`}
             onClick={() => handleCellClick(index)}
           >
             {cell === "X" ? <X shouldAnimate={animationTriggers[index]} /> : null}
@@ -87,10 +91,10 @@ const Board = ({ board, handleCellClick, animationTriggers }: Props) => {
           </div>
         ))}
 
-        {/* Vertical Lines */}
+        {/* Vertical lines */}
         <div className="absolute left-1/3 top-4 bottom-4 w-1 bg-white"></div>
         <div className="absolute left-2/3 top-4 bottom-4 w-1 bg-white"></div>
-        {/* Horizontal Lines */}
+        {/* Horizontal lines */}
         <div className="absolute top-1/3 left-4 right-4 h-1 bg-white"></div>
         <div className="absolute top-2/3 left-4 right-4 h-1 bg-white"></div>
       </div>
